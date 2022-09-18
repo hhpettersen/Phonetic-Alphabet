@@ -19,8 +19,15 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .clickable {
-                navController.navigate(route = Screen.Detail.route)
-            }) {
+                navController.navigate(
+                    route = Screen.Detail.passArgs(
+                        name = "Håkon",
+                        surname = "Pettersen",
+                        city = "Kløfta"
+                    )
+                )
+            }
+    ) {
         Text(text = "Home screen")
     }
 }
