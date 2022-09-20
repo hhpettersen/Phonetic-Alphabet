@@ -1,48 +1,67 @@
 package com.example.dinnerplanswitch.ui.navigation.nav_graph
 
-import android.util.Log
-import androidx.navigation.*
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.dinnerplanswitch.ui.navigation.*
-import com.example.dinnerplanswitch.ui.screens.DetailScreen
-import com.example.dinnerplanswitch.ui.screens.HomeScreen
+import androidx.navigation.navigation
+import com.example.dinnerplanswitch.BottomBarScreen
+import com.example.dinnerplanswitch.ui.screens.ScreenContent
 
-fun NavGraphBuilder.homeNavGraph(
-    navController: NavHostController
-) {
-    navigation(
-        startDestination = Screen.Home.route,
-        route = HOME_ROUTE,
+@Composable
+fun HomeNavGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        route = Graph.HOME,
+        startDestination = BottomBarScreen.Home.route
     ) {
-        composable(
-            route = Screen.Home.route,
-        ) {
-            HomeScreen(
-                navController = navController
-            )
-        }
-        composable(
-            route = Screen.Detail.route,
-            arguments = listOf(
-                navArgument(DETAIL_ARGUMENT_KEY) {
-                    type = NavType.StringType
-                },
-                navArgument(DETAIL_ARGUMENT_KEY2) {
-                    type = NavType.StringType
-                },
-                navArgument(DETAIL_ARGUMENT_KEY3) {
-                    type = NavType.StringType
-                    nullable = true
+        composable(route = BottomBarScreen.Home.route) {
+            ScreenContent(
+                name = BottomBarScreen.Home.route,
+                onClick = {
+                    navController.navigate(Graph.DETAILS)
                 }
             )
-        ) {
-            Log.d("Args", it.arguments?.getString(DETAIL_ARGUMENT_KEY).toString())
-            Log.d("Args", it.arguments?.getString(DETAIL_ARGUMENT_KEY2).toString())
-            Log.d("Args", it.arguments?.getString(DETAIL_ARGUMENT_KEY3).toString())
-            DetailScreen(
-                navController = navController
+        }
+        composable(route = BottomBarScreen.Profile.route) {
+            ScreenContent(
+                name = BottomBarScreen.Profile.route,
+                onClick = { }
             )
         }
+        composable(route = BottomBarScreen.Settings.route) {
+            ScreenContent(
+                name = BottomBarScreen.Settings.route,
+                onClick = { }
+            )
+        }
+        detailsNavGraph(navController = navController)
     }
+}
 
+fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+    navigation(
+        route = Graph.DETAILS,
+        startDestination = DetailsScreen.Information.route
+    ) {
+        composable(route = DetailsScreen.Information.route) {
+            ScreenContent(name = DetailsScreen.Information.route) {
+                navController.navigate(DetailsScreen.Overview.route)
+            }
+        }
+        composable(route = DetailsScreen.Overview.route) {
+            ScreenContent(name = DetailsScreen.Overview.route) {
+                navController.popBackStack(
+                    route = DetailsScreen.Information.route,
+                    inclusive = false
+                )
+            }
+        }
+    }
+}
+
+sealed class DetailsScreen(val route: String) {
+    object Information : DetailsScreen(route = "INFORMATION")
+    object Overview : DetailsScreen(route = "OVERVIEW")
 }

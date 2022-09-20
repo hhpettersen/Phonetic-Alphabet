@@ -4,27 +4,39 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.dinnerplanswitch.ui.navigation.AUTH_ROUTE
-import com.example.dinnerplanswitch.ui.navigation.Screen
-import com.example.dinnerplanswitch.ui.screens.LoginScreen
-import com.example.dinnerplanswitch.ui.screens.SignUpScreen
+import com.example.dinnerplanswitch.ui.screens.LoginContent
+import com.example.dinnerplanswitch.ui.screens.ScreenContent
 
-fun NavGraphBuilder.authNavGraph(
-    navController: NavHostController
-) {
+fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
-        startDestination = Screen.Login.route,
-        route = AUTH_ROUTE,
+        route = Graph.AUTHENTICATION,
+        startDestination = AuthScreen.Login.route
     ) {
-        composable(
-            route = Screen.Login.route,
-        ) {
-            LoginScreen(navController = navController)
+        composable(route = AuthScreen.Login.route) {
+            LoginContent(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Graph.HOME)
+                },
+                onSignUpClick = {
+                    navController.navigate(AuthScreen.SignUp.route)
+                },
+                onForgotClick = {
+                    navController.navigate(AuthScreen.Forgot.route)
+                }
+            )
         }
-        composable(
-            route = Screen.Signup.route,
-        ) {
-            SignUpScreen(navController = navController)
+        composable(route = AuthScreen.SignUp.route) {
+            ScreenContent(name = AuthScreen.SignUp.route) {}
+        }
+        composable(route = AuthScreen.Forgot.route) {
+            ScreenContent(name = AuthScreen.Forgot.route) {}
         }
     }
+}
+
+sealed class AuthScreen(val route: String) {
+    object Login : AuthScreen(route = "LOGIN")
+    object SignUp : AuthScreen(route = "SIGN_UP")
+    object Forgot : AuthScreen(route = "FORGOT")
 }
