@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch.ui.navigation.nav_graph
+package com.example.dinnerplanswitch.ui.navigation.graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

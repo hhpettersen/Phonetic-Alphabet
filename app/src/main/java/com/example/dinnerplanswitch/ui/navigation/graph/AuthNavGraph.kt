@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch.ui.navigation.nav_graph
+package com.example.dinnerplanswitch.ui.navigation.graph
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController

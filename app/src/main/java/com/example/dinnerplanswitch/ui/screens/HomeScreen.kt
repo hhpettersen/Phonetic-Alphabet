@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.dinnerplanswitch.BottomBarScreen
-import com.example.dinnerplanswitch.ui.navigation.nav_graph.HomeNavGraph
+import com.example.dinnerplanswitch.ui.navigation.graph.HomeNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
