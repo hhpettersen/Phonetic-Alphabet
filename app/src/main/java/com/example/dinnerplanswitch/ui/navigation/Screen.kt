@@ -11,6 +11,7 @@ private const val SIGNUP_SCREEN_ROUTE = "signup_screen"
 
 const val AUTH_ROUTE = "auth"
 const val ROOT_ROUTE = "root"
+const val HOME_ROUTE = "home"
 
 sealed class Screen(val route: String) {
     object Home: Screen(route = HOME_SCREEN_ROUTE)

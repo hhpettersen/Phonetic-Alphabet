@@ -1,8 +1,9 @@
-package com.example.dinnerplanswitch.ui.navigation
+package com.example.dinnerplanswitch.ui.navigation.nav_graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.example.dinnerplanswitch.ui.navigation.*
 
 @Composable
 fun SetupNavGraph(
@@ -10,7 +11,7 @@ fun SetupNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = HOME_ROUTE,
         route = ROOT_ROUTE,
     ) {
         homeNavGraph(navController = navController)

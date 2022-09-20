@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.dinnerplanswitch.ui.navigation.AUTH_ROUTE
+import com.example.dinnerplanswitch.ui.navigation.Screen
 
 @Composable
 fun DetailScreen(
@@ -16,7 +18,10 @@ fun DetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .clickable {
-                navController.popBackStack()
+//                navController.popBackStack()
+                navController.navigate(
+                    route = AUTH_ROUTE
+                )
             }
     ) {
         Text(text = "Detail screen")

@@ -1,9 +1,11 @@
-package com.example.dinnerplanswitch.ui.navigation
+package com.example.dinnerplanswitch.ui.navigation.nav_graph
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.dinnerplanswitch.ui.navigation.AUTH_ROUTE
+import com.example.dinnerplanswitch.ui.navigation.Screen
 import com.example.dinnerplanswitch.ui.screens.LoginScreen
 import com.example.dinnerplanswitch.ui.screens.SignUpScreen
 

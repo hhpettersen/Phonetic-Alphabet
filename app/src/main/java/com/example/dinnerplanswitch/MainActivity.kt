@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.dinnerplanswitch.ui.navigation.SetupNavGraph
+import com.example.dinnerplanswitch.ui.navigation.nav_graph.SetupNavGraph
 import com.example.dinnerplanswitch.ui.theme.DinnerPlanSwitchTheme
 
 class MainActivity : ComponentActivity() {
