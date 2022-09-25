@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch.ui.screens
+package com.app.phoneticalphabet.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.RowScope
@@ -11,8 +11,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.dinnerplanswitch.BottomBarScreen
-import com.example.dinnerplanswitch.ui.navigation.graph.HomeNavGraph
+import com.app.phoneticalphabet.BottomBarScreen
+import com.app.phoneticalphabet.ui.navigation.graph.HomeNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

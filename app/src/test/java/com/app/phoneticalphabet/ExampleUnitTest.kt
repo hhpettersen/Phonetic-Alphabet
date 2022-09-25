@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch
+package com.app.phoneticalphabet
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

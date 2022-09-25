@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch
+package com.app.phoneticalphabet
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

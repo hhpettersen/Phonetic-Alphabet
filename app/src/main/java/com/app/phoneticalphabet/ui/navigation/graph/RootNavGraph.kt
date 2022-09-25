@@ -1,10 +1,10 @@
-package com.example.dinnerplanswitch.ui.navigation.graph
+package com.app.phoneticalphabet.ui.navigation.graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.dinnerplanswitch.ui.screens.HomeScreen
+import com.app.phoneticalphabet.ui.screens.HomeScreen
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {

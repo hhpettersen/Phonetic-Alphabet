@@ -4,16 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.dinnerplanswitch'
+    namespace 'com.app.phoneticalphabet'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.dinnerplanswitch"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
+        applicationId "com.app.phoneticalphabet"
+        minSdkVersion 23
+        targetSdkVersion 33
+        versionCode 6
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true

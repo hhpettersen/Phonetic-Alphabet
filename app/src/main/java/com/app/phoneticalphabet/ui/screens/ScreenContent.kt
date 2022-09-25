@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch.ui.screens
+package com.app.phoneticalphabet.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

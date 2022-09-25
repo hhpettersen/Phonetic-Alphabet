@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch
+package com.app.phoneticalphabet
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

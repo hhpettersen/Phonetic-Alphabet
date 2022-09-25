@@ -1,4 +1,4 @@
-package com.example.dinnerplanswitch.ui.navigation.graph
+package com.app.phoneticalphabet.ui.navigation.graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.dinnerplanswitch.BottomBarScreen
-import com.example.dinnerplanswitch.ui.screens.ScreenContent
+import com.app.phoneticalphabet.BottomBarScreen
+import com.app.phoneticalphabet.ui.screens.ScreenContent
 
 @Composable
 fun HomeNavGraph(navController: NavHostController) {
