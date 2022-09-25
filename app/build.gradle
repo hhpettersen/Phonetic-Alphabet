@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
 }
 
 apply plugin: 'kotlin-kapt'
@@ -88,6 +89,13 @@ dependencies {
     implementation "androidx.room:room-rxjava3:$room_version"
     implementation "androidx.room:room-guava:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
+
+    // Hilt
+    def compose_hilt_navigation_version = "1.0.0"
+    def dagger_hilt = "2.38.1"
+    implementation "androidx.hilt:hilt-navigation-compose:$compose_hilt_navigation_version"
+    implementation "com.google.dagger:hilt-android:$dagger_hilt"
+    kapt "com.google.dagger:hilt-compiler:$dagger_hilt"
 }
 
 kapt {
