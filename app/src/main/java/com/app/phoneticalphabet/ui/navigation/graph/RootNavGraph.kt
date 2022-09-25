@@ -11,9 +11,9 @@ fun RootNavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = Graph.ROOT,
-        startDestination = Graph.AUTHENTICATION
+        startDestination = Graph.HOME
     ) {
-        authNavGraph(navController = navController)
+//        authNavGraph(navController = navController)
         composable(route = Graph.HOME) {
             HomeScreen()
         }
@@ -22,7 +22,7 @@ fun RootNavigationGraph(navController: NavHostController) {
 
 object Graph {
     const val ROOT = "root_graph"
-    const val AUTHENTICATION = "auth_graph"
+//    const val AUTHENTICATION = "auth_graph"
     const val HOME = "home_graph"
     const val DETAILS = "details_graph"
 }
