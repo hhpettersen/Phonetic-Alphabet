@@ -5,13 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.app.phoneticalphabet.ui.navigation.graph.RootNavigationGraph
-import com.app.phoneticalphabet.ui.theme.DinnerPlanSwitchTheme
+import com.app.phoneticalphabet.ui.theme.MainTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DinnerPlanSwitchTheme {
+            MainTheme {
                 RootNavigationGraph(navController = rememberNavController())
             }
         }
