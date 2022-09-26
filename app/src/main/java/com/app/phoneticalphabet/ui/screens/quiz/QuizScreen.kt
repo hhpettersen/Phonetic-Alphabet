@@ -16,7 +16,7 @@ import com.app.phoneticalphabet.models.Question
 @Composable
 fun QuizScreen(
     modifier: Modifier = Modifier,
-    onEndGame: () -> Unit,
+    onEndGame: (Int) -> Unit,
 ) {
     val viewModel = hiltViewModel<QuizViewModel>()
 
@@ -35,6 +35,14 @@ fun QuizScreen(
             )
         }
     }
+
+    state.value.uiEvent
+        .firstOrNull()?.let { event ->
+            viewModel.onUiEventHandled(event.id)
+            when (event) {
+                is UiEvent.EndQuiz -> onEndGame(event.finalScore)
+            }
+        }
 }
 
 @Composable

@@ -49,7 +49,7 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         startDestination = QuizScreen.Quiz.route
     ) {
         composable(route = QuizScreen.Quiz.route) {
-            QuizScreen {
+            QuizScreen { finalScore ->
                 navController.navigate(QuizScreen.Result.route) {
                     popUpTo(BottomBarScreen.Home.route) {
                         inclusive = false
