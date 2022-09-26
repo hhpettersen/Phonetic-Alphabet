@@ -7,14 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.app.phoneticalphabet.BottomBarScreen
-import com.app.phoneticalphabet.ui.screens.LoginContent
 import com.app.phoneticalphabet.ui.screens.ScreenContent
 
 @Composable
-fun HomeNavGraph(navController: NavHostController) {
+fun MainNavGraph(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
-        route = Graph.HOME,
+        route = Graph.MAIN,
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {

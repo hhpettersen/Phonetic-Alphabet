@@ -12,16 +12,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.phoneticalphabet.BottomBarScreen
-import com.app.phoneticalphabet.ui.navigation.graph.HomeNavGraph
+import com.app.phoneticalphabet.ui.navigation.graph.MainNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun MainScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {
-        HomeNavGraph(navController = navController)
+        MainNavGraph(navController = navController)
     }
 }
 
