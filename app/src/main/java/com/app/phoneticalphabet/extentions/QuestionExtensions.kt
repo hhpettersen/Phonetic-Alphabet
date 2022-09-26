@@ -11,7 +11,7 @@ fun List<Word>.generateQuestions(): List<Question> =
             answers = it.generateAnswers(Word.wrongWords),
             letter = it.letter
         )
-    }
+    }.shuffled()
 
 private fun Word.generateAnswers(wrongWords: List<String>) =
     wrongWords.getWordsStartingWith(letter)
