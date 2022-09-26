@@ -21,13 +21,13 @@ private fun Word.generateAnswers(wrongWords: List<String>) =
 
 private fun List<String>.getWordsStartingWith(letter: String): List<String> =
     shuffled()
-        .take(3)
         .filter {
             it.lowercase(Locale.getDefault())
                 .startsWith(
                     letter.lowercase(Locale.ROOT)
                 )
         }
+        .take(3)
 
 private fun List<String>.getWrongAnswers(): List<Answer> =
     map {
