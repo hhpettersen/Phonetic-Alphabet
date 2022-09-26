@@ -1,12 +1,5 @@
 package com.app.phoneticalphabet.ui.navigation.graph
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
-import com.app.phoneticalphabet.ui.screens.LoginContent
-import com.app.phoneticalphabet.ui.screens.ScreenContent
-
 //fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 //    navigation(
 //        route = Graph.AUTHENTICATION,

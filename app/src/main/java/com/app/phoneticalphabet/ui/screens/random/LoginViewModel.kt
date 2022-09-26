@@ -1,4 +1,4 @@
-package com.app.phoneticalphabet.ui.screens
+package com.app.phoneticalphabet.ui.screens.random
 
 import androidx.lifecycle.ViewModel
 import com.app.phoneticalphabet.repository.Repository

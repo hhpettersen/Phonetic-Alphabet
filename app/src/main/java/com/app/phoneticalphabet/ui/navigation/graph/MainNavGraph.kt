@@ -7,8 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.app.phoneticalphabet.BottomBarScreen
-import com.app.phoneticalphabet.ui.screens.ScreenContent
+import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.home.HomeScreen
+import com.app.phoneticalphabet.ui.screens.quiz.QuizScreen
 
 @Composable
 fun MainNavGraph(
@@ -48,7 +49,7 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         startDestination = QuizScreen.Quiz.route
     ) {
         composable(route = QuizScreen.Quiz.route) {
-            ScreenContent(name = QuizScreen.Quiz.route) {
+            QuizScreen {
                 navController.navigate(QuizScreen.Result.route) {
                     popUpTo(BottomBarScreen.Home.route) {
                         inclusive = false
