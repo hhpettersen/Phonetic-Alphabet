@@ -23,14 +23,8 @@ fun MainNavGraph(
             HomeScreen(
                 onAlphabetClicked = {},
                 onFlashCardsClicked = {},
-                onQuizClicked = { navController.navigate(Graph.DETAILS) }
+                onQuizClicked = { navController.navigate(Graph.QUIZ) }
             )
-//            ScreenContent(
-//                name = BottomBarScreen.Home.route,
-//                onClick = {
-//                    navController.navigate(Graph.DETAILS)
-//                }
-//            )
         }
         composable(route = BottomBarScreen.Profile.route) {
             ScreenContent(
@@ -44,24 +38,28 @@ fun MainNavGraph(
                 onClick = { }
             )
         }
-        detailsNavGraph(navController = navController)
+        quizNavGraph(navController = navController)
     }
 }
 
-fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
     navigation(
-        route = Graph.DETAILS,
-        startDestination = DetailsScreen.Information.route
+        route = Graph.QUIZ,
+        startDestination = QuizScreen.Quiz.route
     ) {
-        composable(route = DetailsScreen.Information.route) {
-            ScreenContent(name = DetailsScreen.Information.route) {
-                navController.navigate(DetailsScreen.Overview.route)
+        composable(route = QuizScreen.Quiz.route) {
+            ScreenContent(name = QuizScreen.Quiz.route) {
+                navController.navigate(QuizScreen.Result.route) {
+                    popUpTo(BottomBarScreen.Home.route) {
+                        inclusive = false
+                    }
+                }
             }
         }
-        composable(route = DetailsScreen.Overview.route) {
-            ScreenContent(name = DetailsScreen.Overview.route) {
+        composable(route = QuizScreen.Result.route) {
+            ScreenContent(name = QuizScreen.Result.route) {
                 navController.popBackStack(
-                    route = DetailsScreen.Information.route,
+                    route = QuizScreen.Quiz.route,
                     inclusive = false
                 )
             }
@@ -69,7 +67,7 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     }
 }
 
-sealed class DetailsScreen(val route: String) {
-    object Information : DetailsScreen(route = "INFORMATION")
-    object Overview : DetailsScreen(route = "OVERVIEW")
+sealed class QuizScreen(val route: String) {
+    object Quiz : QuizScreen(route = "QUIZ")
+    object Result : QuizScreen(route = "RESULT")
 }
