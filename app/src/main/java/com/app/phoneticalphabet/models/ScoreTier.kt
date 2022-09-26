@@ -1,33 +1,23 @@
 package com.app.phoneticalphabet.models
 
-import com.app.phoneticalphabet.R
-
-enum class ScoreTier {
-    BRONZE, SILVER, GOLD;
+enum class ScoreTier(requiredScored: Int) {
+    BRONZE(0),
+    SILVER(15),
+    GOLD(23);
 
     companion object {
-        fun getScoreTier(score: Int): ScoreTier {
-            return when {
-                score < 15 -> BRONZE
-                score < 23 -> SILVER
-                else -> GOLD
-            }
-        }
-
-        fun getTierTint(tier: ScoreTier): Int {
-            return when (tier) {
+        fun ScoreTier.medalTint(): Int =
+            when (this) {
                 BRONZE -> 0
                 SILVER -> 0
                 GOLD -> 0
             }
-        }
 
-        fun getTierText(tier: ScoreTier): String {
-            return when (tier) {
+        fun ScoreTier.tierText(): String =
+            when (this) {
                 BRONZE -> "BRONZE"
                 SILVER -> "SILVER"
                 GOLD -> "GOLD"
             }
-        }
     }
 }
