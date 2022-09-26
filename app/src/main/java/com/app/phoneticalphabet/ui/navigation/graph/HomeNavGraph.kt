@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.app.phoneticalphabet.BottomBarScreen
 import com.app.phoneticalphabet.ui.screens.ScreenContent
+import com.app.phoneticalphabet.ui.screens.home.HomeScreen
 
 @Composable
 fun MainNavGraph(
@@ -19,12 +20,17 @@ fun MainNavGraph(
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            ScreenContent(
-                name = BottomBarScreen.Home.route,
-                onClick = {
-                    navController.navigate(Graph.DETAILS)
-                }
+            HomeScreen(
+                onAlphabetClicked = {},
+                onFlashCardsClicked = {},
+                onQuizClicked = { navController.navigate(Graph.DETAILS) }
             )
+//            ScreenContent(
+//                name = BottomBarScreen.Home.route,
+//                onClick = {
+//                    navController.navigate(Graph.DETAILS)
+//                }
+//            )
         }
         composable(route = BottomBarScreen.Profile.route) {
             ScreenContent(
