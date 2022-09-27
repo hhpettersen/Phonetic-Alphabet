@@ -21,6 +21,7 @@ fun QuizContent(
         Column(
             modifier = Modifier.align(Alignment.Center)
         ) {
+            Text(text = "Current high score: ${state.highScore}")
             Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
             Text(text = "Score: ${state.score}")
             Questions(

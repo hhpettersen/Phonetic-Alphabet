@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.phoneticalphabet.extentions.generateQuestions
 import com.app.phoneticalphabet.models.Answer
+import com.app.phoneticalphabet.models.HighScore
 import com.app.phoneticalphabet.models.Question
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.repository.Repository
@@ -28,6 +29,7 @@ data class QuizViewState(
     val numberCurrentQuestion: Int = 1,
     val score: Int = 0,
     val uiEvent: List<UiEvent> = emptyList(),
+    val highScore: Int = 0,
 ) {
     val numberOfQuestions: Int = questions.size
 }
@@ -38,6 +40,16 @@ class QuizViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(QuizViewState())
     val state: StateFlow<QuizViewState> = _state
+
+    init {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    highScore = repository.getHighScore().score
+                )
+            }
+        }
+    }
 
     fun onAnswerSelected(answer: Answer) {
         viewModelScope.launch {
@@ -64,6 +76,9 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun endQuiz() {
+        viewModelScope.launch {
+            repository.insertHighScore(HighScore(score = state.value.score))
+        }
         updateUiEvent(
             UiEvent.EndQuiz(
                 finalScore = state.value.score
