@@ -8,6 +8,7 @@ import com.app.phoneticalphabet.BottomBarScreen
 import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.home.HomeScreen
 import com.app.phoneticalphabet.ui.screens.quiz.QuizScreen
+import com.app.phoneticalphabet.ui.screens.result.ResultScreen
 
 @Composable
 fun MainNavGraph(
@@ -63,8 +64,7 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
                 }
             )
         ) {
-            val score = it.arguments?.getInt("score") ?: 0
-            ScreenContent(name = QuizScreen.Result.route) {
+            ResultScreen {
                 navController.popBackStack(
                     route = QuizScreen.Quiz.route,
                     inclusive = false
