@@ -5,9 +5,9 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.phoneticalphabet.BottomBarScreen
-import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.home.HomeScreen
 import com.app.phoneticalphabet.ui.screens.quiz.QuizScreen
+import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.result.ResultScreen
 
 @Composable
@@ -48,13 +48,7 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         startDestination = QuizScreen.Quiz.route
     ) {
         composable(route = QuizScreen.Quiz.route) {
-            QuizScreen { score ->
-                navController.navigate("${QuizScreen.Result.route}/$score") {
-                    popUpTo(BottomBarScreen.Home.route) {
-                        inclusive = false
-                    }
-                }
-            }
+            QuizScreen { score -> navController.fromQuizToResult(score) }
         }
         composable(
             route = "${QuizScreen.Result.route}/{score}",
@@ -64,12 +58,34 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
                 }
             )
         ) {
-            ResultScreen {
-                navController.popBackStack(
-                    route = QuizScreen.Quiz.route,
-                    inclusive = false
-                )
-            }
+            ResultScreen(
+                onNewGame = { navController.fromResultToQuiz() },
+                onFinish = { navController.fromResultToHome() }
+            )
+        }
+    }
+}
+
+private fun NavHostController.fromQuizToResult(score: Int) {
+    navigate("${QuizScreen.Result.route}/$score") {
+        popUpTo(BottomBarScreen.Home.route) {
+            inclusive = false
+        }
+    }
+}
+
+private fun NavHostController.fromResultToQuiz() {
+    navigate(route = QuizScreen.Quiz.route) {
+        popUpTo(BottomBarScreen.Home.route) {
+            inclusive = false
+        }
+    }
+}
+
+private fun NavHostController.fromResultToHome() {
+    navigate(Graph.MAIN) {
+        popUpTo(BottomBarScreen.Home.route) {
+            inclusive = true
         }
     }
 }
