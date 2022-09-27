@@ -76,8 +76,10 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun endQuiz() {
-        viewModelScope.launch {
-            repository.insertHighScore(HighScore(score = state.value.score))
+        if (state.value.score > state.value.highScore) {
+            viewModelScope.launch {
+                repository.insertHighScore(HighScore(score = state.value.score))
+            }
         }
         updateUiEvent(
             UiEvent.EndQuiz(
