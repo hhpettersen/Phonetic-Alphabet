@@ -1,11 +1,9 @@
 package com.app.phoneticalphabet.ui.navigation.graph
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.app.phoneticalphabet.BottomBarScreen
 import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.home.HomeScreen
@@ -49,15 +47,23 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         startDestination = QuizScreen.Quiz.route
     ) {
         composable(route = QuizScreen.Quiz.route) {
-            QuizScreen { finalScore ->
-                navController.navigate(QuizScreen.Result.route) {
+            QuizScreen { score ->
+                navController.navigate("${QuizScreen.Result.route}/$score") {
                     popUpTo(BottomBarScreen.Home.route) {
                         inclusive = false
                     }
                 }
             }
         }
-        composable(route = QuizScreen.Result.route) {
+        composable(
+            route = "${QuizScreen.Result.route}/{score}",
+            arguments = listOf(
+                navArgument("score") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            val score = it.arguments?.getInt("score") ?: 0
             ScreenContent(name = QuizScreen.Result.route) {
                 navController.popBackStack(
                     route = QuizScreen.Quiz.route,
