@@ -45,7 +45,7 @@ class QuizViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    highScore = repository.getHighScore().score
+                    highScore = repository.getHighScore()?.score ?: 0
                 )
             }
         }

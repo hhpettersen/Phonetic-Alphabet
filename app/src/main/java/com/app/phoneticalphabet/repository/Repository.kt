@@ -1,6 +1,7 @@
 package com.app.phoneticalphabet.repository
 
 import androidx.annotation.WorkerThread
+import com.app.phoneticalphabet.models.CompletedFlashcard
 import com.app.phoneticalphabet.models.HighScore
 import com.app.phoneticalphabet.storage.DAO
 import kotlinx.coroutines.Dispatchers
@@ -17,4 +18,11 @@ class Repository @Inject constructor(
     }
 
     suspend fun getHighScore() = DAO.highScoreFromCache()
+
+    @WorkerThread
+    suspend fun insertCompletedFlashcards(timeStamp: String) = withContext(Dispatchers.IO) {
+        DAO.insertCompletedFlashcard(CompletedFlashcard(timeStamp = timeStamp))
+    }
+
+    suspend fun getCompletedFlashcards() = DAO.flashcardHistoryFromCache()
 }
