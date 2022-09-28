@@ -7,14 +7,21 @@ import androidx.navigation.compose.composable
 import com.app.phoneticalphabet.ui.screens.MainScreen
 
 @Composable
-fun RootNavigationGraph(navController: NavHostController) {
+fun RootNavigationGraph(
+    navController: NavHostController,
+    darkTheme: Boolean,
+    toggleDarkTheme: (Boolean) -> Unit,
+) {
     NavHost(
         navController = navController,
         route = Graph.ROOT,
         startDestination = Graph.MAIN
     ) {
         composable(route = Graph.MAIN) {
-            MainScreen()
+            MainScreen(
+                darkTheme = darkTheme,
+                toggleDarkTheme = toggleDarkTheme
+            )
         }
     }
 }

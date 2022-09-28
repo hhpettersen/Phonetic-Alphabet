@@ -1,10 +1,19 @@
 package com.app.phoneticalphabet.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -12,17 +21,71 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.phoneticalphabet.BottomBarScreen
+import com.app.phoneticalphabet.R
 import com.app.phoneticalphabet.ui.navigation.graph.MainNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navController: NavHostController = rememberNavController()) {
+fun MainScreen(
+    navController: NavHostController = rememberNavController(),
+    darkTheme: Boolean,
+    toggleDarkTheme: (Boolean) -> Unit,
+) {
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = { BottomBar(navController = navController) },
+        topBar = {
+            TopBar(
+                navController = navController,
+                darkTheme = darkTheme,
+                toggleDarkTheme = toggleDarkTheme
+            )
+        },
     ) {
-        MainNavGraph(navController = navController)
+        Box(modifier = Modifier.padding(top = 24.dp)) {
+            MainNavGraph(navController = navController)
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBar(
+    navController: NavHostController,
+    darkTheme: Boolean,
+    toggleDarkTheme: (Boolean) -> Unit,
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val visible = currentDestination?.route?.let { BottomBarScreen.Home.route != it } ?: false
+
+    CenterAlignedTopAppBar(
+        title = { Text(text = "Nato Phonetic Alphabet") },
+        navigationIcon = {
+            if (visible) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        painter = rememberVectorPainter(image = Icons.Default.ArrowBack),
+                        contentDescription = "back"
+                    )
+                }
+            }
+        },
+        actions = {
+            val icon = if (darkTheme) R.drawable.sunny_48px else R.drawable.bedtime_48px
+            IconButton(
+                modifier = Modifier
+                    .height(24.dp)
+                    .padding(horizontal = 8.dp),
+                onClick = { toggleDarkTheme(!darkTheme) }) {
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = "toggle dark theme"
+                )
+            }
+        },
+    )
 }
 
 @Composable
