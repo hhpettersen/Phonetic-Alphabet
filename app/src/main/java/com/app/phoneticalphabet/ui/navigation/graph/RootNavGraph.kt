@@ -26,4 +26,5 @@ object Graph {
     const val MAIN = "main_graph"
     const val QUIZ = "quiz_graph"
     const val ALPHABET = "alphabet_graph"
+    const val FLASHCARD = "flashcard_graph"
 }
