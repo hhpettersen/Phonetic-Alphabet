@@ -39,4 +39,17 @@ class FlashcardViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+
+    fun onNewRound() {
+        wordIndex = 0
+        val alphabetShuffled = state.value.alphabet.shuffled()
+        _state.update {
+            it.copy(
+                alphabet = alphabetShuffled,
+                wordsCompleted = false,
+                numberCurrentWord = 0,
+                currentWord = alphabetShuffled[wordIndex],
+            )
+        }
+    }
 }

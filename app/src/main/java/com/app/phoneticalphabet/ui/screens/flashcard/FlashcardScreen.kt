@@ -14,7 +14,7 @@ fun FlashCardScreen(
     FlashcardContent(
         state = state.value,
         onNextWordClicked = { viewModel.onNextWord() },
-        onNewRound = {},
+        onNewRound = { viewModel.onNewRound() },
         onEndFlashcards = onEndFlashcards
     )
 }
