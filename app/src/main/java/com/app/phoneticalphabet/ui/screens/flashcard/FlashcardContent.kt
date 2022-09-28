@@ -29,6 +29,7 @@ fun FlashcardContent(
                 .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Text(text = "Completed flashcards: ${state.completedFlashCards}")
             if (state.wordsCompleted) {
                 CompletedContent(
                     onNewRound = onNewRound,
@@ -95,6 +96,7 @@ fun PreviewFlashcardContent() {
             numberCurrentWord = 1,
             currentWord = Word.alphabet[5],
             wordsCompleted = false,
+            completedFlashCards = 4
         ),
         onNextWordClicked = {},
         onNewRound = {},
