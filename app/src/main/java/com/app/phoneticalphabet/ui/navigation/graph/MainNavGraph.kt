@@ -5,6 +5,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.phoneticalphabet.BottomBarScreen
+import com.app.phoneticalphabet.ui.screens.alphabet.AlphabetScreen
 import com.app.phoneticalphabet.ui.screens.home.HomeScreen
 import com.app.phoneticalphabet.ui.screens.quiz.QuizScreen
 import com.app.phoneticalphabet.ui.screens.random.ScreenContent
@@ -21,7 +22,7 @@ fun MainNavGraph(
     ) {
         composable(route = BottomBarScreen.Home.route) {
             HomeScreen(
-                onAlphabetClicked = {},
+                onAlphabetClicked = { navController.fromHomeToAlphabet() },
                 onFlashCardsClicked = {},
                 onQuizClicked = { navController.navigate(Graph.QUIZ) }
             )
@@ -38,7 +39,19 @@ fun MainNavGraph(
                 onClick = { }
             )
         }
+        alphabetGraph(navController = navController)
         quizNavGraph(navController = navController)
+    }
+}
+
+fun NavGraphBuilder.alphabetGraph(navController: NavHostController) {
+    navigation(
+        route = Graph.ALPHABET,
+        startDestination = AlphabetScreen.Alphabet.route,
+    ) {
+        composable(route = AlphabetScreen.Alphabet.route) {
+            AlphabetScreen()
+        }
     }
 }
 
@@ -90,7 +103,19 @@ private fun NavHostController.fromResultToHome() {
     }
 }
 
+private fun NavHostController.fromHomeToAlphabet() {
+    navigate(Graph.ALPHABET) {
+        popUpTo(BottomBarScreen.Home.route) {
+            inclusive = false
+        }
+    }
+}
+
 sealed class QuizScreen(val route: String) {
     object Quiz : QuizScreen(route = "QUIZ")
     object Result : QuizScreen(route = "RESULT")
+}
+
+sealed class AlphabetScreen(val route: String) {
+    object Alphabet : AlphabetScreen(route = "ALPHABET")
 }

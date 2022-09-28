@@ -25,4 +25,5 @@ object Graph {
 //    const val AUTHENTICATION = "auth_graph"
     const val MAIN = "main_graph"
     const val QUIZ = "quiz_graph"
+    const val ALPHABET = "alphabet_graph"
 }
