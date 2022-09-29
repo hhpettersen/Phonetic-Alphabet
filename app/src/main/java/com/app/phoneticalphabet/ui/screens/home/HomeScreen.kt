@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
@@ -25,16 +26,14 @@ fun HomeScreen(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = onAlphabetClicked,
-            ) {
-                Text(text = "Phonetic alphabet")
+            StandardButton(text = "Phonetic alphabet") {
+                onAlphabetClicked()
             }
-            Button(onClick = onFlashCardsClicked) {
-                Text(text = "Flashcards")
+            StandardButton(text = "Flashcards") {
+                onFlashCardsClicked()
             }
-            Button(onClick = onQuizClicked) {
-                Text(text = "Quiz")
+            StandardButton(text = "Quiz") {
+                onQuizClicked()
             }
         }
     }

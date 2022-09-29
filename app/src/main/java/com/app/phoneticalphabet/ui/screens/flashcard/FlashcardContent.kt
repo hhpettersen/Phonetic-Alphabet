@@ -31,7 +31,7 @@ fun FlashcardContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 64.dp),
+                .padding(bottom = 128.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = "Completed flashcards: ${state.completedFlashCards}")
