@@ -1,10 +1,7 @@
 package com.app.phoneticalphabet.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -13,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -23,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.app.phoneticalphabet.BottomBarScreen
 import com.app.phoneticalphabet.R
 import com.app.phoneticalphabet.ui.navigation.graph.MainNavGraph
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -34,16 +33,18 @@ fun MainScreen(
 ) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) },
-        topBar = {
-            TopBar(
-                navController = navController,
-                darkTheme = darkTheme,
-                toggleDarkTheme = toggleDarkTheme
-            )
-        },
     ) {
-        Box(modifier = Modifier.padding(top = 24.dp)) {
-            MainNavGraph(navController = navController)
+        Box(
+            modifier = Modifier
+        ) {
+            Column {
+                TopBar(
+                    navController = navController,
+                    darkTheme = darkTheme,
+                    toggleDarkTheme = toggleDarkTheme
+                )
+                MainNavGraph(navController = navController)
+            }
         }
     }
 }
@@ -60,32 +61,34 @@ fun TopBar(
 
     val visible = currentDestination?.route?.let { BottomBarScreen.Home.route != it } ?: false
 
-    CenterAlignedTopAppBar(
-        title = { Text(text = "Nato Phonetic Alphabet") },
-        navigationIcon = {
-            if (visible) {
-                IconButton(onClick = { navController.popBackStack() }) {
+    currentDestination?.route?.let { title ->
+        CenterAlignedTopAppBar(
+            title = { Text(text = title.lowercase(Locale.ROOT).capitalize(Locale.ROOT)) },
+            navigationIcon = {
+                if (visible) {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            painter = rememberVectorPainter(image = Icons.Default.ArrowBack),
+                            contentDescription = "back"
+                        )
+                    }
+                }
+            },
+            actions = {
+                val icon = if (darkTheme) R.drawable.sunny_48px else R.drawable.bedtime_48px
+                IconButton(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .padding(horizontal = 8.dp),
+                    onClick = { toggleDarkTheme(!darkTheme) }) {
                     Icon(
-                        painter = rememberVectorPainter(image = Icons.Default.ArrowBack),
-                        contentDescription = "back"
+                        painter = painterResource(id = icon),
+                        contentDescription = "toggle dark theme"
                     )
                 }
-            }
-        },
-        actions = {
-            val icon = if (darkTheme) R.drawable.sunny_48px else R.drawable.bedtime_48px
-            IconButton(
-                modifier = Modifier
-                    .height(24.dp)
-                    .padding(horizontal = 8.dp),
-                onClick = { toggleDarkTheme(!darkTheme) }) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = "toggle dark theme"
-                )
-            }
-        },
-    )
+            },
+        )
+    }
 }
 
 @Composable
