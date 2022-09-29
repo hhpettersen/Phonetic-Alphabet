@@ -3,6 +3,7 @@ package com.app.phoneticalphabet.ui.screens.flashcard
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Word
+import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
 fun FlashcardContent(
@@ -26,7 +30,8 @@ fun FlashcardContent(
     ) {
         Column(
             modifier = Modifier
-                .align(Alignment.Center),
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 64.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = "Completed flashcards: ${state.completedFlashCards}")
@@ -50,11 +55,11 @@ fun CompletedContent(
     onNewRound: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
-    Button(onClick = onNewRound) {
-        Text(text = "New round")
+    StandardButton(text = "New round") {
+        onNewRound()
     }
-    Button(onClick = onEndFlashcards) {
-        Text(text = "Back to dashboard")
+    StandardButton(text = "Back to dashboard") {
+        onEndFlashcards()
     }
 }
 
@@ -73,33 +78,31 @@ fun Flashcard(
     Text(text = "${state.numberCurrentWord}/${state.alphabet.size}")
     Text(text = state.currentWord.letter)
     Text(text = wordText)
-    Button(
-        onClick = {
-            if (wordVisible.value) {
-                wordVisible.value = false
-                onNextWordClicked()
-            } else {
-                wordVisible.value = true
-            }
+    StandardButton(text = buttonText) {
+        if (wordVisible.value) {
+            wordVisible.value = false
+            onNextWordClicked()
+        } else {
+            wordVisible.value = true
         }
-    ) {
-        Text(text = buttonText)
     }
 }
 
 @Preview
 @Composable
 fun PreviewFlashcardContent() {
-    FlashcardContent(
-        state = FlashCardViewState(
-            alphabet = Word.alphabet,
-            numberCurrentWord = 1,
-            currentWord = Word.alphabet[5],
-            wordsCompleted = false,
-            completedFlashCards = 4
-        ),
-        onNextWordClicked = {},
-        onNewRound = {},
-        onEndFlashcards = {}
-    )
+    MainTheme {
+        FlashcardContent(
+            state = FlashCardViewState(
+                alphabet = Word.alphabet,
+                numberCurrentWord = 1,
+                currentWord = Word.alphabet[5],
+                wordsCompleted = false,
+                completedFlashCards = 4
+            ),
+            onNextWordClicked = {},
+            onNewRound = {},
+            onEndFlashcards = {}
+        )
+    }
 }
