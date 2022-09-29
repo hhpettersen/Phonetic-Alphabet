@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +25,7 @@ fun AlphabetContent(
             .padding(16.dp)
     ) {
         LazyVerticalGrid(
+            modifier = modifier.align(Alignment.Center),
             columns = GridCells.Fixed(2),
         ) {
             alphabet.forEach { word -> item { WordRow(word = word) } }
