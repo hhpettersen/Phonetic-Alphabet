@@ -1,7 +1,9 @@
 package com.app.phoneticalphabet.ui.screens.quiz
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Answer
 import com.app.phoneticalphabet.models.Question
+import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
 fun QuizContent(
@@ -17,9 +21,15 @@ fun QuizContent(
     state: QuizViewState,
     onAnswerSelected: (Answer) -> Unit,
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
         Column(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = "Current high score: ${state.highScore}")
             Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
@@ -40,22 +50,51 @@ fun Questions(
     questionsEnabled: Boolean,
 ) {
     question.answers.forEach {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp),
-            onClick = { onAnswerSelected(it) },
-            enabled = questionsEnabled
-        ) {
-            Text(text = it.word)
+        StandardButton(text = it.word, enabled = questionsEnabled) {
+            onAnswerSelected(it)
         }
     }
 }
 
 @Preview
 @Composable
-fun PreviewQuizScreen() {
-    QuizScreen(
-        onEndGame = {}
-    )
+fun PreviewQuizContent() {
+    MainTheme {
+        QuizContent(
+            state = QuizViewState(
+                questions = questions,
+                questionIndex = 0,
+                question = questions[0],
+                questionsEnabled = true,
+                numberCurrentQuestion = 0,
+                score = 4,
+                uiEvent = listOf(),
+                highScore = 7
+            ), onAnswerSelected = {}
+        )
+    }
 }
+
+private val questions = listOf(
+    Question(
+        answers = listOf(
+            Answer(
+                word = "Alpha",
+                correct = false,
+            ),
+            Answer(
+                word = "Alpha",
+                correct = false,
+            ),
+            Answer(
+                word = "Alpha",
+                correct = false,
+            ),
+            Answer(
+                word = "Alpha",
+                correct = false,
+            ),
+        ),
+        letter = "A"
+    )
+)
