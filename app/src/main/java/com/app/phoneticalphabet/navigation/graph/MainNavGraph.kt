@@ -1,4 +1,4 @@
-package com.app.phoneticalphabet.ui.navigation.graph
+package com.app.phoneticalphabet.navigation.graph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.*

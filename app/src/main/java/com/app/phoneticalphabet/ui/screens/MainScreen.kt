@@ -19,7 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.phoneticalphabet.BottomBarScreen
 import com.app.phoneticalphabet.R
-import com.app.phoneticalphabet.ui.navigation.graph.MainNavGraph
+import com.app.phoneticalphabet.navigation.graph.MainNavGraph
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
