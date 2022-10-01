@@ -3,7 +3,7 @@ package com.app.phoneticalphabet
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.app.phoneticalphabet.models.CompletedFlashcard
-import com.app.phoneticalphabet.models.flashcardStats
+import com.app.phoneticalphabet.models.stats
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +19,7 @@ class Tests {
 
     @Test
     fun shouldGetListOfFlashcardStats() {
-        val stats = completedFlashCards.flashcardStats()
+        val stats = completedFlashCards.stats()
         Assert.assertEquals(2, stats.size)
         Assert.assertEquals(4, stats.first().completions)
     }

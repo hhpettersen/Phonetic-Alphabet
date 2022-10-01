@@ -2,7 +2,9 @@ package com.app.phoneticalphabet.ui.screens.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.phoneticalphabet.models.flashcardStats
+import com.app.phoneticalphabet.models.averageScore
+import com.app.phoneticalphabet.models.highScore
+import com.app.phoneticalphabet.models.stats
 import com.app.phoneticalphabet.repository.Repository
 import com.madrapps.plot.line.DataPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class StatsViewState(
-    val flashCardStats: List<FlashCardStats> = emptyList(),
-    val totalCompletions: Int = 0,
-    val highScore: Int = 0
+    val flashCardStats: List<FlashCardStat> = emptyList(),
+    val totalFlashcards: Int = 0,
+    val quizHighScore: Int = 0,
+    val totalQuizzes: Int = 0,
+    val averageQuizScore: Int = 0,
+    val quizStats: List<QuizStat> = emptyList(),
 )
 
 @HiltViewModel
@@ -27,23 +32,31 @@ class StatsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
-
+            val quizResults = repository.getQuizResults()
+            val completedFlashcards = repository.getCompletedFlashcards()
 
             _state.update {
                 it.copy(
-                    flashCardStats = completedFlashCards.flashcardStats(),
-//                    flashCardStats = repository.getCompletedFlashcards().flashcardStats(),
-                    totalCompletions = completedFlashCards.size,
-                    highScore = repository.getHighScore()?.score ?: 0,
+                    flashCardStats = completedFlashcards.stats(),
+                    totalFlashcards = completedFlashcards.size,
+                    quizHighScore = quizResults.highScore()?.score ?: 0,
+                    totalQuizzes = quizResults.size,
+                    averageQuizScore = quizResults.averageScore(),
+                    quizStats = quizResults.stats()
                 )
             }
         }
     }
 }
 
-data class FlashCardStats(
+data class FlashCardStat(
     val completions: Int,
+    val date: String,
+    val dataPoint: DataPoint,
+)
+
+data class QuizStat(
+    val score: Int,
     val date: String,
     val dataPoint: DataPoint,
 )
