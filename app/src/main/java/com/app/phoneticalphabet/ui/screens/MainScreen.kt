@@ -32,18 +32,18 @@ fun MainScreen(
 ) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) },
-    ) {
+        topBar = {
+            TopBar(
+                navController = navController,
+                darkTheme = darkTheme,
+                toggleDarkTheme = toggleDarkTheme
+            )
+        }
+    ) { innerPadding ->
         Box(
-            modifier = Modifier
+            modifier = Modifier.padding(innerPadding)
         ) {
-            Column {
-                TopBar(
-                    navController = navController,
-                    darkTheme = darkTheme,
-                    toggleDarkTheme = toggleDarkTheme
-                )
-                MainNavGraph(navController = navController)
-            }
+            MainNavGraph(navController = navController)
         }
     }
 }
