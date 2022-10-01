@@ -1,5 +1,6 @@
 package com.app.phoneticalphabet.ui.screens.quiz
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.phoneticalphabet.extentions.generateQuestions
@@ -27,6 +28,8 @@ data class QuizViewState(
     val score: Int = 0,
     val uiEvent: List<UiEvent> = emptyList(),
     val highScore: Int = 0,
+    val actionText: String = "",
+    val actionTextColor: Color = Color.Green
 ) {
     val numberOfQuestions: Int = questions.size
 }
@@ -55,9 +58,16 @@ class QuizViewModel @Inject constructor(
                     score = if (answer.correct) it.score + 1 else it.score,
                     questionIndex = it.questionIndex + 1,
                     questionsEnabled = false,
+                    actionText = if (answer.correct) "Correct!" else "Wrong!",
+                    actionTextColor = if (answer.correct) Color.Green else Color.Red
                 )
             }
             delay(1500)
+            _state.update {
+                it.copy(
+                    actionText = ""
+                )
+            }
             if (state.value.numberOfQuestions == state.value.questionIndex) {
                 endQuiz()
             } else {

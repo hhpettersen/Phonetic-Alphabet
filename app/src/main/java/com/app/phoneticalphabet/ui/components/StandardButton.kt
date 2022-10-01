@@ -22,7 +22,7 @@ fun StandardButton(
             .fillMaxWidth()
             .padding(horizontal = 72.dp),
         onClick = onClick,
-        enabled = enabled
+        enabled = enabled,
     ) {
         Text(text = text)
     }
