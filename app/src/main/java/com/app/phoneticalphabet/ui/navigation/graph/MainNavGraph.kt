@@ -11,6 +11,7 @@ import com.app.phoneticalphabet.ui.screens.home.HomeScreen
 import com.app.phoneticalphabet.ui.screens.quiz.QuizScreen
 import com.app.phoneticalphabet.ui.screens.random.ScreenContent
 import com.app.phoneticalphabet.ui.screens.result.ResultScreen
+import com.app.phoneticalphabet.ui.screens.stats.StatsScreen
 
 @Composable
 fun MainNavGraph(
@@ -34,11 +35,8 @@ fun MainNavGraph(
                 onClick = { }
             )
         }
-        composable(route = BottomBarScreen.Settings.route) {
-            ScreenContent(
-                name = BottomBarScreen.Settings.route,
-                onClick = { }
-            )
+        composable(route = BottomBarScreen.Stats.route) {
+            StatsScreen()
         }
         alphabetGraph()
         flashcardGraph(navController = navController)

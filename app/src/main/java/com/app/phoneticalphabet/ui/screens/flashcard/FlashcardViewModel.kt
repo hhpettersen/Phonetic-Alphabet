@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
+import kotlinx.datetime.Clock
 import javax.inject.Inject
 
 data class FlashCardViewState(
@@ -44,8 +44,7 @@ class FlashcardViewModel @Inject constructor(
         if (state.value.alphabet.lastIndex < wordIndex) {
             _state.update {
                 viewModelScope.launch {
-                    val date = Date().time.toString()
-                    repository.insertCompletedFlashcards(date)
+                    repository.insertCompletedFlashcards(Clock.System.now().toString())
                 }
                 it.copy(
                     wordsCompleted = true,
