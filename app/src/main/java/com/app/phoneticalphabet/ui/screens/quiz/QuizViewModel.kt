@@ -19,7 +19,7 @@ sealed class UiEvent(val id: Long = UUID.randomUUID().mostSignificantBits) {
 }
 
 data class QuizViewState(
-    val questions: List<Question> = Word.alphabet.generateQuestions().take(3),
+    val questions: List<Question> = Word.alphabet.generateQuestions(),
     val questionIndex: Int = 0,
     val question: Question = questions[questionIndex],
     val questionsEnabled: Boolean = true,
