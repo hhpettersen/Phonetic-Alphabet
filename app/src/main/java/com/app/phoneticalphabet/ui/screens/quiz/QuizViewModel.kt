@@ -3,10 +3,7 @@ package com.app.phoneticalphabet.ui.screens.quiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.phoneticalphabet.extentions.generateQuestions
-import com.app.phoneticalphabet.models.Answer
-import com.app.phoneticalphabet.models.HighScore
-import com.app.phoneticalphabet.models.Question
-import com.app.phoneticalphabet.models.Word
+import com.app.phoneticalphabet.models.*
 import com.app.phoneticalphabet.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -22,7 +19,7 @@ sealed class UiEvent(val id: Long = UUID.randomUUID().mostSignificantBits) {
 }
 
 data class QuizViewState(
-    val questions: List<Question> = Word.alphabet.generateQuestions(),
+    val questions: List<Question> = Word.alphabet.generateQuestions().take(3),
     val questionIndex: Int = 0,
     val question: Question = questions[questionIndex],
     val questionsEnabled: Boolean = true,
@@ -45,7 +42,7 @@ class QuizViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    highScore = repository.getHighScore()?.score ?: 0
+                    highScore = repository.getQuizResults().highScore()?.score ?: 0
                 )
             }
         }
@@ -76,10 +73,10 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun endQuiz() {
-        if (state.value.score > state.value.highScore) {
-            viewModelScope.launch {
-                repository.insertHighScore(HighScore(score = state.value.score))
-            }
+        viewModelScope.launch {
+            repository.insertQuizResult(
+                QuizResult(score = state.value.score)
+            )
         }
         updateUiEvent(
             UiEvent.EndQuiz(

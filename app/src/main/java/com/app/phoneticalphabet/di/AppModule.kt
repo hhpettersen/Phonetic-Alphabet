@@ -21,7 +21,7 @@ class AppModule {
     ) = Room.databaseBuilder(
         app,
         Database::class.java,
-        "high_score_db"
+        "phonetic_db"
     ).fallbackToDestructiveMigration().build() // The reason we can construct a database for the repo
 
     @Singleton

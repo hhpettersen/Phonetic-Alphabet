@@ -2,20 +2,19 @@ package com.app.phoneticalphabet.storage
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.app.phoneticalphabet.models.CompletedFlashcard
-import com.app.phoneticalphabet.models.HighScore
+import com.app.phoneticalphabet.models.QuizResult
 
 @Dao
 interface DAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHighScore(highScore: HighScore?)
+    @Insert(entity = QuizResult::class)
+    suspend fun insertQuizResult(result: QuizResult)
 
-    @Query("SELECT * FROM high_score")
-    suspend fun highScoreFromCache(): HighScore?
+    @Query("SELECT * FROM quiz_results")
+    suspend fun quizResultsFromCache(): List<QuizResult>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(entity = CompletedFlashcard::class)
     suspend fun insertCompletedFlashcard(flashcard: CompletedFlashcard)
 
     @Query("SELECT * FROM completed_flashcards")
