@@ -60,9 +60,15 @@ fun TopBar(
 
     val visible = currentDestination?.route?.let { BottomBarScreen.Home.route != it } ?: false
 
-    currentDestination?.route?.let { title ->
+    currentDestination?.route?.let {
+        val title = it
+            .replace("([^a-zA-Z0-9 -])".toRegex(), "-")
+            .split("-")
+            .first()
+            .lowercase(Locale.ROOT).capitalize(Locale.ROOT)
+
         CenterAlignedTopAppBar(
-            title = { Text(text = title.lowercase(Locale.ROOT).capitalize(Locale.ROOT)) },
+            title = { Text(text = title) },
             navigationIcon = {
                 if (visible) {
                     IconButton(onClick = { navController.popBackStack() }) {

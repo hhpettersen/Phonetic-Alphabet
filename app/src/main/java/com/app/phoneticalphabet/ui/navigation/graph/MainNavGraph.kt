@@ -136,5 +136,5 @@ sealed class AlphabetScreen(val route: String) {
 }
 
 sealed class FlashcardScreen(val route: String) {
-    object Flashcard : FlashcardScreen(route = "FLASHCARD")
+    object Flashcard : FlashcardScreen(route = "FLASHCARDS")
 }
