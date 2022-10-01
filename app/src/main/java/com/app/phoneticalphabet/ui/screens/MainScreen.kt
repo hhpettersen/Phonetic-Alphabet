@@ -94,7 +94,6 @@ fun TopBar(
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Home,
-        BottomBarScreen.Profile,
         BottomBarScreen.Stats,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()

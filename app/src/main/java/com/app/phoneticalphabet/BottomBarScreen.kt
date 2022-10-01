@@ -2,8 +2,7 @@ package com.app.phoneticalphabet
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomBarScreen(
@@ -17,15 +16,9 @@ sealed class BottomBarScreen(
         icon = Icons.Default.Home
     )
 
-    object Profile : BottomBarScreen(
-        route = "PROFILE",
-        title = "PROFILE",
-        icon = Icons.Default.Person
-    )
-
     object Stats : BottomBarScreen(
         route = "STATS",
         title = "STATS",
-        icon = Icons.Default.Settings
+        icon = Icons.Default.Menu
     )
 }

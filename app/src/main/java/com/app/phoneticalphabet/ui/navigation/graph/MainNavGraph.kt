@@ -29,12 +29,6 @@ fun MainNavGraph(
                 onQuizClicked = { navController.navigate(Graph.QUIZ) }
             )
         }
-        composable(route = BottomBarScreen.Profile.route) {
-            ScreenContent(
-                name = BottomBarScreen.Profile.route,
-                onClick = { }
-            )
-        }
         composable(route = BottomBarScreen.Stats.route) {
             StatsScreen()
         }
@@ -49,7 +43,7 @@ fun NavGraphBuilder.flashcardGraph(navController: NavHostController) {
         route = Graph.FLASHCARD,
         startDestination = FlashcardScreen.Flashcard.route,
     ) {
-        composable(route = FlashcardScreen.Flashcard.route,) {
+        composable(route = FlashcardScreen.Flashcard.route) {
             FlashCardScreen(
                 onEndFlashcards = { navController.toHome() }
             )
