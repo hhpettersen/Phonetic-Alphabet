@@ -1,5 +1,7 @@
 package com.app.phoneticalphabet
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,20 +14,29 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
         setContent {
-            val darkTheme = remember { mutableStateOf(false) }
-
+            val isDarkTheme = remember { mutableStateOf(sharedPref.isDarkTheme()) }
             MainTheme(
-                darkTheme = darkTheme.value
+                darkTheme = isDarkTheme.value
             ) {
                 RootNavigationGraph(
                     navController = rememberNavController(),
-                    darkTheme = darkTheme.value,
-                    toggleDarkTheme = { darkTheme.value = it }
+                    darkTheme = isDarkTheme.value,
+                    toggleDarkTheme = {
+                        isDarkTheme.value = it
+                        sharedPref.saveDarkThemePreference(it)
+                    }
                 )
             }
         }
     }
+
+    private fun SharedPreferences.isDarkTheme() = getBoolean("isDarkTheme", false)
+    private fun SharedPreferences.saveDarkThemePreference(value: Boolean) =
+        edit().putBoolean("isDarkTheme", value).apply()
 }
