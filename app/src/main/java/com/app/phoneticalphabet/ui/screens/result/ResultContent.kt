@@ -1,15 +1,15 @@
 package com.app.phoneticalphabet.ui.screens.result
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
 fun ResultContent(
@@ -24,18 +24,22 @@ fun ResultContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .padding(bottom = 128.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Column {
-                Text(text = "${state.tierText} TIER")
-                Text(text = "Score: ${state.score}")
-                Row {
-                   Button(onClick = { onNewGame() }) {
-                       Text(text = "Play again")
-                   }
-                   Button(onClick = { onCloseQuiz() }) {
-                       Text(text = "Back home")
-                   }
-                }
+            if (state.newHighScore) {
+                Text(
+                    text = "New high score, congratulations!",
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Text(text = "Score: ${state.score}")
+            StandardButton(text = "Play again") {
+                onNewGame()
+            }
+            StandardButton(text = "Back home") {
+                onCloseQuiz()
             }
         }
     }
@@ -44,13 +48,16 @@ fun ResultContent(
 @Preview
 @Composable
 fun PreviewResultContent() {
-    ResultContent(
-        state = ResultViewState(
-            score = 2,
-            medalTint = 0,
-            tierText = "BRONZE"
-        ),
-        onNewGame = {},
-        onCloseQuiz = {},
-    )
+    MainTheme {
+        ResultContent(
+            state = ResultViewState(
+                score = 2,
+                medalTint = 0,
+                tierText = "BRONZE",
+                newHighScore = true,
+            ),
+            onNewGame = {},
+            onCloseQuiz = {},
+        )
+    }
 }

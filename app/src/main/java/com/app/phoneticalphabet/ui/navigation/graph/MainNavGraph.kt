@@ -68,13 +68,16 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         startDestination = QuizScreen.Quiz.route
     ) {
         composable(route = QuizScreen.Quiz.route) {
-            QuizScreen { score -> navController.fromQuizToResult(score) }
+            QuizScreen { score, newHighScore -> navController.fromQuizToResult(score, newHighScore) }
         }
         composable(
-            route = "${QuizScreen.Result.route}/{score}",
+            route = "${QuizScreen.Result.route}/{score}/{newHighScore}",
             arguments = listOf(
                 navArgument("score") {
                     type = NavType.IntType
+                },
+                navArgument("newHighScore") {
+                    type = NavType.BoolType
                 }
             )
         ) {
@@ -86,8 +89,8 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
     }
 }
 
-private fun NavHostController.fromQuizToResult(score: Int) {
-    navigate("${QuizScreen.Result.route}/$score") {
+private fun NavHostController.fromQuizToResult(score: Int, newHighScore: Boolean) {
+    navigate("${QuizScreen.Result.route}/$score/$newHighScore") {
         popUpTo(BottomBarScreen.Home.route) {
             inclusive = false
         }

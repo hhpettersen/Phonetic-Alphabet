@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 sealed class UiEvent(val id: Long = UUID.randomUUID().mostSignificantBits) {
-    data class EndQuiz(val finalScore: Int) : UiEvent()
+    data class EndQuiz(val finalScore: Int, val newHighScore: Boolean) : UiEvent()
 }
 
 data class QuizViewState(
@@ -90,7 +90,8 @@ class QuizViewModel @Inject constructor(
         }
         updateUiEvent(
             UiEvent.EndQuiz(
-                finalScore = state.value.score
+                finalScore = state.value.score,
+                newHighScore = state.value.score > state.value.highScore
             )
         )
     }

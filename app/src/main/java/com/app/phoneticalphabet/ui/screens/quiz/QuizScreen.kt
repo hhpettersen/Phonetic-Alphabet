@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun QuizScreen(
-    onEndGame: (Int) -> Unit,
+    onEndGame: (Int, Boolean) -> Unit,
 ) {
     val viewModel = hiltViewModel<QuizViewModel>()
     val state = viewModel.state.collectAsState()
@@ -20,7 +20,7 @@ fun QuizScreen(
         .firstOrNull()?.let { event ->
             viewModel.onUiEventHandled(event.id)
             when (event) {
-                is UiEvent.EndQuiz -> onEndGame(event.finalScore)
+                is UiEvent.EndQuiz -> onEndGame(event.finalScore, event.newHighScore)
             }
         }
 }

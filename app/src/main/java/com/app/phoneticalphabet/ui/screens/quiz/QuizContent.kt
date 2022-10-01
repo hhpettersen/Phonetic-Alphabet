@@ -31,7 +31,11 @@ fun QuizContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = state.actionText, style = MaterialTheme.typography.titleLarge, color = state.actionTextColor)
+            Text(
+                text = state.actionText,
+                style = MaterialTheme.typography.titleLarge,
+                color = state.actionTextColor
+            )
             Text(text = "Current high score: ${state.highScore}")
             Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
             Text(text = "Score: ${state.score}")
@@ -50,14 +54,12 @@ fun Questions(
     onAnswerSelected: (Answer) -> Unit,
     questionsEnabled: Boolean,
 ) {
-    Column {
-        question.answers.forEach {
-            StandardButton(
-                text = it.word,
-                enabled = questionsEnabled
-            ) {
-                onAnswerSelected(it)
-            }
+    question.answers.forEach {
+        StandardButton(
+            text = it.word,
+            enabled = questionsEnabled
+        ) {
+            onAnswerSelected(it)
         }
     }
 }
