@@ -17,6 +17,7 @@ fun ResultContent(
     state: ResultViewState,
     onNewGame: () -> Unit,
     onCloseQuiz: () -> Unit,
+    onViewStats: () -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -38,6 +39,9 @@ fun ResultContent(
             StandardButton(text = "Play again") {
                 onNewGame()
             }
+            StandardButton(text = "View stats") {
+                onViewStats()
+            }
             StandardButton(text = "Back home") {
                 onCloseQuiz()
             }
@@ -58,6 +62,7 @@ fun PreviewResultContent() {
             ),
             onNewGame = {},
             onCloseQuiz = {},
+            onViewStats = {}
         )
     }
 }

@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ResultScreen(
     onNewGame: () -> Unit,
+    onViewStats: () -> Unit,
     onFinish: () -> Unit,
 ) {
     val viewModel = hiltViewModel<ResultViewModel>()
@@ -15,6 +16,7 @@ fun ResultScreen(
     ResultContent(
         state = state.value,
         onNewGame = onNewGame,
+        onViewStats = onViewStats,
         onCloseQuiz = onFinish
     )
 }

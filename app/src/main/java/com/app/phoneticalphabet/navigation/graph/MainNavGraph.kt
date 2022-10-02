@@ -83,6 +83,7 @@ fun NavGraphBuilder.quizNavGraph(navController: NavHostController) {
         ) {
             ResultScreen(
                 onNewGame = { navController.fromResultToQuiz() },
+                onViewStats = { navController.toStats() },
                 onFinish = { navController.toHome() }
             )
         }
@@ -109,6 +110,14 @@ private fun NavHostController.toHome() {
     navigate(Graph.MAIN) {
         popUpTo(BottomBarScreen.Home.route) {
             inclusive = true
+        }
+    }
+}
+
+private fun NavHostController.toStats() {
+    navigate(route = BottomBarScreen.Stats.route) {
+        popUpTo(BottomBarScreen.Home.route) {
+            inclusive = false
         }
     }
 }
