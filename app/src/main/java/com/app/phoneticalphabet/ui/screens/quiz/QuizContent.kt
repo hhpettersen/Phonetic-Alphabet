@@ -59,8 +59,8 @@ fun QuizContent(
                     )
                 }
                 Text(text = "Current high score: ${state.highScore}")
-                Text(text = "Score: ${state.score}")
                 Questions(
+                    score = state.score,
                     question = state.question,
                     onAnswerSelected = onAnswerSelected,
                     questionsEnabled = state.questionsEnabled,
@@ -75,6 +75,7 @@ fun QuizContent(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Questions(
+    score: Int,
     numberCurrentQuestion: Int,
     numberOfQuestions: Int,
     question: Question,
@@ -83,6 +84,12 @@ fun Questions(
 ) {
     Card {
         Box {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(8.dp),
+                text = "Score: $score"
+            )
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
