@@ -20,6 +20,8 @@ sealed class UiEvent(val id: Long = UUID.randomUUID().mostSignificantBits) {
 }
 
 data class QuizViewState(
+    val countingDown: Boolean = true,
+    val countDown: Int = 0,
     val questions: List<Question> = Word.alphabet.generateQuestions(),
     val questionIndex: Int = 0,
     val question: Question = questions[questionIndex],
@@ -48,6 +50,22 @@ class QuizViewModel @Inject constructor(
                 it.copy(
                     highScore = repository.getQuizResults().highScore()?.score ?: 0
                 )
+            }
+        }
+        startCountDown()
+    }
+
+    private fun startCountDown() {
+        val countDownTimer = 3
+        viewModelScope.launch {
+            repeat(countDownTimer + 1) { count ->
+                _state.update {
+                    it.copy(
+                        countDown = (countDownTimer - count),
+                        countingDown = count < countDownTimer
+                    )
+                }
+                delay(1000)
             }
         }
     }

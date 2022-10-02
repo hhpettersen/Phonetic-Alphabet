@@ -19,7 +19,6 @@ import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun QuizContent(
     modifier: Modifier = Modifier,
@@ -30,28 +29,36 @@ fun QuizContent(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            AnimatedExpandAndShrink(state.actionTextVisible) {
-                Text(
-                    text = state.actionText,
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = state.actionTextColor
+        if (state.countingDown) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = state.countDown.toString(),
+                style = MaterialTheme.typography.headlineLarge
+            )
+        } else {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                AnimatedExpandAndShrink(state.actionTextVisible) {
+                    Text(
+                        text = state.actionText,
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = state.actionTextColor
+                    )
+                }
+                Text(text = "Current high score: ${state.highScore}")
+                Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
+                Text(text = "Score: ${state.score}")
+                Questions(
+                    question = state.question,
+                    onAnswerSelected = onAnswerSelected,
+                    questionsEnabled = state.questionsEnabled,
                 )
             }
-            Text(text = "Current high score: ${state.highScore}")
-            Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
-            Text(text = "Score: ${state.score}")
-            Questions(
-                question = state.question,
-                onAnswerSelected = onAnswerSelected,
-                questionsEnabled = state.questionsEnabled,
-            )
         }
     }
 }
