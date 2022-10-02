@@ -39,6 +39,16 @@ object Animations {
                     animationSpec = tween(200),
                     targetOffsetX = { fullWidth -> -fullWidth }
                 ) + fadeOut()
+
+    @OptIn(ExperimentalAnimationApi::class)
+    fun slideDown() =
+        slideInVertically { height -> height } + fadeIn() with
+                slideOutVertically { height -> -height } + fadeOut()
+
+    @OptIn(ExperimentalAnimationApi::class)
+    fun slideUp() =
+        slideInVertically { height -> -height } + fadeIn() with
+                slideOutVertically { height -> height } + fadeOut()
 }
 
 @Preview

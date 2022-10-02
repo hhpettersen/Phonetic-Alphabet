@@ -21,7 +21,7 @@ sealed class UiEvent(val id: Long = UUID.randomUUID().mostSignificantBits) {
 
 data class QuizViewState(
     val countingDown: Boolean = true,
-    val countDown: Int = 0,
+    val countDown: String = "",
     val questions: List<Question> = Word.alphabet.generateQuestions(),
     val questionIndex: Int = 0,
     val question: Question = questions[questionIndex],
@@ -61,7 +61,7 @@ class QuizViewModel @Inject constructor(
             repeat(countDownTimer + 1) { count ->
                 _state.update {
                     it.copy(
-                        countDown = (countDownTimer - count),
+                        countDown = (countDownTimer - count).toString(),
                         countingDown = count < countDownTimer
                     )
                 }
