@@ -1,20 +1,26 @@
 package com.app.phoneticalphabet.ui.screens.flashcard
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Word
+import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.extensions.blurEffect
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
@@ -23,6 +29,7 @@ fun FlashcardContent(
     state: FlashCardViewState,
     onNextWordClicked: () -> Unit,
     onNewRound: () -> Unit,
+    onViewStats: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
     Box(
@@ -31,13 +38,15 @@ fun FlashcardContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 104.dp),
+                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(text = "Completed flashcards: ${state.completedFlashCards}")
             if (state.wordsCompleted) {
                 CompletedContent(
                     onNewRound = onNewRound,
+                    onViewStats = onViewStats,
                     onEndFlashcards = onEndFlashcards,
                 )
             } else {
@@ -53,37 +62,67 @@ fun FlashcardContent(
 @Composable
 fun CompletedContent(
     onNewRound: () -> Unit,
+    onViewStats: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
     StandardButton(text = "New round") {
         onNewRound()
+    }
+    StandardButton(text = "View stats") {
+        onViewStats()
     }
     StandardButton(text = "Back to dashboard") {
         onEndFlashcards()
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Flashcard(
     state: FlashCardViewState,
     onNextWordClicked: () -> Unit,
 ) {
     val wordVisible = remember { mutableStateOf(false) }
-
     val buttonText = if (wordVisible.value) "Next" else "Reveal word"
-    val wordText =
-        if (wordVisible.value) state.currentWord.word else state.currentWord.word.map { "_" }
-            .joinToString("")
 
-    Text(text = "${state.numberCurrentWord}/${state.alphabet.size}")
-    Text(text = state.currentWord.letter)
-    Text(text = wordText)
-    StandardButton(text = buttonText) {
-        if (wordVisible.value) {
-            wordVisible.value = false
-            onNextWordClicked()
-        } else {
-            wordVisible.value = true
+    Card {
+        Box {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(4.dp),
+                text = "${state.numberCurrentWord}/${state.alphabet.size}"
+            )
+            Column(
+                modifier = Modifier.padding(vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                AnimatedContent(
+                    targetState = state.currentWord.letter,
+                    transitionSpec = {
+                        Animations.slideInAndOut().using(SizeTransform(clip = false))
+                    }
+                ) { letter ->
+                    Text(
+                        text = letter,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+                Text(
+                    modifier = Modifier.blurEffect(wordVisible.value),
+                    text = state.currentWord.word
+                )
+                StandardButton(text = buttonText) {
+                    if (wordVisible.value) {
+                        wordVisible.value = false
+                        onNextWordClicked()
+                    } else {
+                        wordVisible.value = true
+                    }
+                }
+            }
         }
     }
 }
@@ -102,6 +141,7 @@ fun PreviewFlashcardContent() {
             ),
             onNextWordClicked = {},
             onNewRound = {},
+            onViewStats = {},
             onEndFlashcards = {}
         )
     }

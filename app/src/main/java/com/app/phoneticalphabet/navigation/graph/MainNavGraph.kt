@@ -45,6 +45,7 @@ fun NavGraphBuilder.flashcardGraph(navController: NavHostController) {
     ) {
         composable(route = FlashcardScreen.Flashcard.route) {
             FlashCardScreen(
+                onViewStats = { navController.toStats() },
                 onEndFlashcards = { navController.toHome() }
             )
         }

@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun FlashCardScreen(
+    onViewStats: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
     val viewModel = hiltViewModel<FlashcardViewModel>()
@@ -15,6 +16,7 @@ fun FlashCardScreen(
         state = state.value,
         onNextWordClicked = { viewModel.onNextWord() },
         onNewRound = { viewModel.onNewRound() },
+        onViewStats = onViewStats,
         onEndFlashcards = onEndFlashcards
     )
 }
