@@ -29,7 +29,8 @@ data class QuizViewState(
     val uiEvent: List<UiEvent> = emptyList(),
     val highScore: Int = 0,
     val actionText: String = "",
-    val actionTextColor: Color = Color.Green
+    val actionTextColor: Color = Color.Green,
+    val actionTextVisible: Boolean = false,
 ) {
     val numberOfQuestions: Int = questions.size
 }
@@ -59,13 +60,14 @@ class QuizViewModel @Inject constructor(
                     questionIndex = it.questionIndex + 1,
                     questionsEnabled = false,
                     actionText = if (answer.correct) "Correct!" else "Wrong!",
-                    actionTextColor = if (answer.correct) Color.Green else Color.Red
+                    actionTextColor = if (answer.correct) Color.Green else Color.Red,
+                    actionTextVisible = true,
                 )
             }
             delay(1500)
             _state.update {
                 it.copy(
-                    actionText = ""
+                    actionTextVisible = false,
                 )
             }
             if (state.value.numberOfQuestions == state.value.questionIndex) {

@@ -1,9 +1,11 @@
 package com.app.phoneticalphabet.ui.screens.quiz
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -11,9 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Answer
 import com.app.phoneticalphabet.models.Question
+import com.app.phoneticalphabet.ui.components.AnimatedExpandAndShrink
 import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun QuizContent(
     modifier: Modifier = Modifier,
@@ -27,15 +31,17 @@ fun QuizContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 128.dp),
+                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                text = state.actionText,
-                style = MaterialTheme.typography.titleLarge,
-                color = state.actionTextColor
-            )
+            AnimatedExpandAndShrink(state.actionTextVisible) {
+                Text(
+                    text = state.actionText,
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = state.actionTextColor
+                )
+            }
             Text(text = "Current high score: ${state.highScore}")
             Text(text = "Current question: ${state.numberCurrentQuestion}/${state.numberOfQuestions}")
             Text(text = "Score: ${state.score}")
@@ -54,12 +60,21 @@ fun Questions(
     onAnswerSelected: (Answer) -> Unit,
     questionsEnabled: Boolean,
 ) {
-    question.answers.forEach {
-        StandardButton(
-            text = it.word,
-            enabled = questionsEnabled
+    Card {
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            onAnswerSelected(it)
+            Text(text = question.letter, style = MaterialTheme.typography.titleLarge)
+            question.answers.forEach {
+                StandardButton(
+                    text = it.word,
+                    enabled = questionsEnabled
+                ) {
+                    onAnswerSelected(it)
+                }
+            }
         }
     }
 }
