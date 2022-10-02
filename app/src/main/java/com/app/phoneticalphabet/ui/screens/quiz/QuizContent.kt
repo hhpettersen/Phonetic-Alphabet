@@ -17,12 +17,34 @@ import com.app.phoneticalphabet.models.Answer
 import com.app.phoneticalphabet.models.Question
 import com.app.phoneticalphabet.ui.components.AnimatedExpandAndShrink
 import com.app.phoneticalphabet.ui.components.Animations
+import com.app.phoneticalphabet.ui.components.CountDown
 import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun QuizContent(
+    modifier: Modifier = Modifier,
+    state: QuizViewState,
+    onAnswerSelected: (Answer) -> Unit,
+) {
+    var onGoingCount by remember { mutableStateOf(true) }
+
+    if (onGoingCount) {
+        CountDown(
+            onCountFinished = { onGoingCount = false }
+        )
+    } else {
+        Content(
+            modifier = modifier,
+            state = state,
+            onAnswerSelected = onAnswerSelected,
+        )
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun Content(
     modifier: Modifier = Modifier,
     state: QuizViewState,
     onAnswerSelected: (Answer) -> Unit,
@@ -31,43 +53,30 @@ fun QuizContent(
         modifier = modifier
             .fillMaxSize()
     ) {
-        if (state.countingDown) {
-            AnimatedContent(
-                modifier = Modifier.align(Alignment.Center),
-                targetState = state.countDown,
-                transitionSpec = { Animations.slideDown().using(SizeTransform(clip = false)) }
-            ) { countDown ->
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            AnimatedExpandAndShrink(state.actionTextVisible) {
                 Text(
-                    text = countDown,
-                    style = MaterialTheme.typography.headlineLarge
+                    text = state.actionText,
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = state.actionTextColor,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
-        } else {
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                AnimatedExpandAndShrink(state.actionTextVisible) {
-                    Text(
-                        text = state.actionText,
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = state.actionTextColor,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-                Text(text = "Current high score: ${state.highScore}")
-                Questions(
-                    score = state.score,
-                    question = state.question,
-                    onAnswerSelected = onAnswerSelected,
-                    questionsEnabled = state.questionsEnabled,
-                    numberCurrentQuestion = state.numberCurrentQuestion,
-                    numberOfQuestions = state.numberOfQuestions,
-                )
-            }
+            Text(text = "Current high score: ${state.highScore}")
+            Questions(
+                score = state.score,
+                question = state.question,
+                onAnswerSelected = onAnswerSelected,
+                questionsEnabled = state.questionsEnabled,
+                numberCurrentQuestion = state.numberCurrentQuestion,
+                numberOfQuestions = state.numberOfQuestions,
+            )
         }
     }
 }
@@ -103,7 +112,9 @@ fun Questions(
             ) {
                 AnimatedContent(
                     targetState = question.letter,
-                    transitionSpec = { Animations.slideInAndOut().using(SizeTransform(clip = false)) }
+                    transitionSpec = {
+                        Animations.slideInAndOut().using(SizeTransform(clip = false))
+                    }
                 ) { letter ->
                     Text(
                         text = letter,
@@ -128,7 +139,7 @@ fun Questions(
 @Composable
 fun PreviewQuizContent() {
     MainTheme {
-        QuizContent(
+        Content(
             state = QuizViewState(
                 questions = questions,
                 questionIndex = 0,
@@ -141,7 +152,6 @@ fun PreviewQuizContent() {
                 actionText = "Wrong!",
                 actionTextColor = Color.Red,
                 actionTextVisible = true,
-                countingDown = false,
             ), onAnswerSelected = {}
         )
     }
