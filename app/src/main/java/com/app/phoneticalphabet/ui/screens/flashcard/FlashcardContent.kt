@@ -7,24 +7,49 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.ui.components.Animations
+import com.app.phoneticalphabet.ui.components.CountDown
 import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.extensions.blurEffect
 import com.app.phoneticalphabet.ui.theme.MainTheme
+import kotlinx.coroutines.delay
 
 @Composable
 fun FlashcardContent(
+    modifier: Modifier = Modifier,
+    state: FlashCardViewState,
+    onNextWordClicked: () -> Unit,
+    onNewRound: () -> Unit,
+    onViewStats: () -> Unit,
+    onEndFlashcards: () -> Unit,
+) {
+    var onGoingCount by remember { mutableStateOf(true) }
+
+    if (onGoingCount) {
+        CountDown(
+            onCountFinished = { onGoingCount = false }
+        )
+    } else {
+        Content(
+            modifier = modifier,
+            state = state,
+            onNextWordClicked = onNextWordClicked,
+            onNewRound = onNewRound,
+            onViewStats = onViewStats,
+            onEndFlashcards = onEndFlashcards,
+        )
+    }
+}
+
+@Composable
+private fun Content(
     modifier: Modifier = Modifier,
     state: FlashCardViewState,
     onNextWordClicked: () -> Unit,
@@ -90,7 +115,7 @@ fun Flashcard(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(4.dp),
+                    .padding(8.dp),
                 text = "${state.numberCurrentWord}/${state.alphabet.size}"
             )
             Column(
@@ -131,7 +156,7 @@ fun Flashcard(
 @Composable
 fun PreviewFlashcardContent() {
     MainTheme {
-        FlashcardContent(
+        Content(
             state = FlashCardViewState(
                 alphabet = Word.alphabet,
                 numberCurrentWord = 1,
