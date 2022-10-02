@@ -1,6 +1,7 @@
 package com.app.phoneticalphabet.ui.components
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -25,6 +26,19 @@ fun AnimatedExpandAndShrink(
     ) {
         content()
     }
+}
+
+object Animations {
+    @OptIn(ExperimentalAnimationApi::class)
+    fun slideInAndOut() =
+        slideInHorizontally(
+            animationSpec = tween(200),
+            initialOffsetX = { fullWidth -> fullWidth }
+        ) + fadeIn() with
+                slideOutHorizontally(
+                    animationSpec = tween(200),
+                    targetOffsetX = { fullWidth -> -fullWidth }
+                ) + fadeOut()
 }
 
 @Preview

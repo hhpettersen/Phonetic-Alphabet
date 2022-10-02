@@ -1,6 +1,7 @@
 package com.app.phoneticalphabet.ui.screens.quiz
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Answer
 import com.app.phoneticalphabet.models.Question
 import com.app.phoneticalphabet.ui.components.AnimatedExpandAndShrink
+import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.StandardButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
@@ -54,19 +56,26 @@ fun QuizContent(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Questions(
     question: Question,
     onAnswerSelected: (Answer) -> Unit,
     questionsEnabled: Boolean,
 ) {
+
     Card {
         Column(
             modifier = Modifier.padding(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = question.letter, style = MaterialTheme.typography.titleLarge)
+            AnimatedContent(
+                targetState = question.letter,
+                transitionSpec = { Animations.slideInAndOut() }
+            ) { letter ->
+                Text(text = letter, style = MaterialTheme.typography.titleLarge)
+            }
             question.answers.forEach {
                 StandardButton(
                     text = it.word,
