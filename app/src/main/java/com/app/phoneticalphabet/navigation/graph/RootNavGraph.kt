@@ -11,6 +11,7 @@ fun RootNavigationGraph(
     navController: NavHostController,
     darkTheme: Boolean,
     toggleDarkTheme: (Boolean) -> Unit,
+    showInAppReview: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -20,7 +21,8 @@ fun RootNavigationGraph(
         composable(route = Graph.MAIN) {
             MainScreen(
                 darkTheme = darkTheme,
-                toggleDarkTheme = toggleDarkTheme
+                toggleDarkTheme = toggleDarkTheme,
+                showInAppReview = showInAppReview
             )
         }
     }

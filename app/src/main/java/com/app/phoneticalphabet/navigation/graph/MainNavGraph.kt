@@ -15,7 +15,8 @@ import com.app.phoneticalphabet.ui.screens.stats.StatsScreen
 
 @Composable
 fun MainNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    showInAppReview: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -30,7 +31,7 @@ fun MainNavGraph(
             )
         }
         composable(route = BottomBarScreen.Stats.route) {
-            StatsScreen()
+            StatsScreen(showInAppReview)
         }
         alphabetGraph()
         flashcardGraph(navController = navController)

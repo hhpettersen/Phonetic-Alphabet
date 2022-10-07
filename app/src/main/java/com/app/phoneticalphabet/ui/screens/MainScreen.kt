@@ -29,6 +29,7 @@ fun MainScreen(
     navController: NavHostController = rememberNavController(),
     darkTheme: Boolean,
     toggleDarkTheme: (Boolean) -> Unit,
+    showInAppReview: () -> Unit,
 ) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) },
@@ -43,7 +44,10 @@ fun MainScreen(
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            MainNavGraph(navController = navController)
+            MainNavGraph(
+                navController = navController,
+                showInAppReview = showInAppReview
+            )
         }
     }
 }
