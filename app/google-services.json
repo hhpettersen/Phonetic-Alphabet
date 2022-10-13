@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "402801796239",
+    "project_id": "phon-2b04c",
+    "storage_bucket": "phon-2b04c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402801796239:android:708973c4dbc1e8a00afcfa",
+        "android_client_info": {
+          "package_name": "com.app.phoneticalphabet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402801796239-24s179krgomc09tel5bc1ent87oisukd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH-hXnwylAHpVoWptx_IpTe4giBADyaDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402801796239-24s179krgomc09tel5bc1ent87oisukd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
