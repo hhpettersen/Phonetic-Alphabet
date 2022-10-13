@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.app.phoneticalphabet.storage.Database
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +32,10 @@ class AppModule {
     @Provides
     fun provideYourDao(db: Database) =
         db.getDao() // The reason we can implement a Dao for the database
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytics() = Firebase.analytics
 }
 
 // Unused, crashes for some reason when field injecting in MainActivity
