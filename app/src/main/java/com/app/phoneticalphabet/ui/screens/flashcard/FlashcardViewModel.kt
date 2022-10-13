@@ -2,8 +2,11 @@ package com.app.phoneticalphabet.ui.screens.flashcard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.phoneticalphabet.firebase.FirebaseEvent
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.repository.Repository
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +26,7 @@ data class FlashCardViewState(
 @HiltViewModel
 class FlashcardViewModel @Inject constructor(
     private val repository: Repository,
+    private val analytics: FirebaseAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow(FlashCardViewState())
     val state: StateFlow<FlashCardViewState> = _state
@@ -37,6 +41,11 @@ class FlashcardViewModel @Inject constructor(
                 )
             }
         }
+
+        // Log firebase-event
+        analytics.logEvent(FirebaseEvent.FLASHCARD_STARTED) {
+            param("completed_flashcards", state.value.completedFlashCards.toString())
+        }
     }
 
     fun onNextWord() {
@@ -50,6 +59,11 @@ class FlashcardViewModel @Inject constructor(
                     wordsCompleted = true,
                     completedFlashCards = it.completedFlashCards + 1,
                 )
+            }
+
+            // Log firebase-event
+            analytics.logEvent(FirebaseEvent.FLASHCARD_FINISHED) {
+                param("completed_flashcards", state.value.completedFlashCards.toString())
             }
         } else {
             _state.update {
