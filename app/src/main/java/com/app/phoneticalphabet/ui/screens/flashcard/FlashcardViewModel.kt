@@ -86,5 +86,10 @@ class FlashcardViewModel @Inject constructor(
                 currentWord = alphabetShuffled[wordIndex],
             )
         }
+
+        // Log firebase-event
+        analytics.logEvent(FirebaseEvent.FLASHCARD_NEW_ROUND) {
+            param("completed_flashcards", state.value.completedFlashCards.toString())
+        }
     }
 }
