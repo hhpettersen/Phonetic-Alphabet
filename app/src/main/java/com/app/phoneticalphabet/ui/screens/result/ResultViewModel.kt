@@ -4,9 +4,12 @@ import androidx.annotation.DrawableRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.phoneticalphabet.firebase.FirebaseEvent
 import com.app.phoneticalphabet.models.ScoreTier
 import com.app.phoneticalphabet.models.ScoreTier.Companion.medalTint
 import com.app.phoneticalphabet.models.ScoreTier.Companion.tierText
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +27,7 @@ data class ResultViewState(
 @HiltViewModel
 class ResultViewModel @Inject constructor(
     handle: SavedStateHandle,
+    analytics: FirebaseAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ResultViewState())
     val state: StateFlow<ResultViewState> = _state
@@ -42,6 +46,10 @@ class ResultViewModel @Inject constructor(
                     newHighScore = newHighScore
                 )
             }
+        }
+
+        analytics.logEvent(FirebaseEvent.QUIZ_FINISHED) {
+            param(FirebaseAnalytics.Param.SCORE, score.toString())
         }
     }
 }
