@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.ui.components.PhonButtonFull
@@ -25,12 +26,13 @@ fun ResultContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 104.dp),
+                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (state.newHighScore) {
                 Text(
+                    textAlign = TextAlign.Center,
                     text = "New high score, congratulations!",
                     style = MaterialTheme.typography.titleLarge
                 )
