@@ -36,7 +36,7 @@ fun CountDown(
         ) {
             Text(
                 text = it,
-                style = MaterialTheme.typography.headlineLarge
+                style = MaterialTheme.typography.titleLarge
             )
         }
     }
