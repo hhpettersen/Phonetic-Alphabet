@@ -13,6 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.app.phoneticalphabet.R
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.CountDown
@@ -66,6 +70,14 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            if (state.wordsCompleted) {
+                val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.medal))
+
+                LottieAnimation(
+                    modifier = Modifier.size(200.dp),
+                    composition = composition
+                )
+            }
             Text(text = "Completed flashcards: ${state.completedFlashCards}")
             if (state.wordsCompleted) {
                 CompletedContent(
@@ -114,7 +126,7 @@ fun Flashcard(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
                 text = "${state.numberCurrentWord}/${state.alphabet.size}"
             )
             Column(
@@ -131,7 +143,6 @@ fun Flashcard(
                     Text(
                         text = letter,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
                     )
                 }
                 Text(
