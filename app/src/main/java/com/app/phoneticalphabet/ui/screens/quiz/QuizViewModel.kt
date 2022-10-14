@@ -4,8 +4,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.phoneticalphabet.extentions.generateQuestions
+import com.app.phoneticalphabet.firebase.FirebaseEvent
 import com.app.phoneticalphabet.models.*
 import com.app.phoneticalphabet.repository.Repository
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +40,8 @@ data class QuizViewState(
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    analytics: FirebaseAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow(QuizViewState())
     val state: StateFlow<QuizViewState> = _state
@@ -50,6 +54,8 @@ class QuizViewModel @Inject constructor(
                 )
             }
         }
+
+        analytics.logEvent(FirebaseEvent.QUIZ_STARTED) {}
     }
 
     fun onAnswerSelected(answer: Answer) {

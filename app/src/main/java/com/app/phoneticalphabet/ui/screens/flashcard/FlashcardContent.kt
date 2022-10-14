@@ -13,13 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.app.phoneticalphabet.R
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.CountDown
-import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.components.PhonButtonFull
 import com.app.phoneticalphabet.ui.extensions.blurEffect
 import com.app.phoneticalphabet.ui.theme.MainTheme
-import kotlinx.coroutines.delay
 
 @Composable
 fun FlashcardContent(
@@ -67,6 +70,14 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            if (state.wordsCompleted) {
+                val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.medal))
+
+                LottieAnimation(
+                    modifier = Modifier.size(200.dp),
+                    composition = composition
+                )
+            }
             Text(text = "Completed flashcards: ${state.completedFlashCards}")
             if (state.wordsCompleted) {
                 CompletedContent(
@@ -90,14 +101,14 @@ fun CompletedContent(
     onViewStats: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
-    StandardButton(text = "New round") {
-        onNewRound()
+    PhonButtonFull(onClick = onNewRound) {
+        Text(text = "New round")
     }
-    StandardButton(text = "View stats") {
-        onViewStats()
+    PhonButtonFull(onClick = onViewStats) {
+        Text(text = "View stats")
     }
-    StandardButton(text = "Back to dashboard") {
-        onEndFlashcards()
+    PhonButtonFull(onClick = onEndFlashcards) {
+        Text(text = "Back to dashboard")
     }
 }
 
@@ -115,7 +126,7 @@ fun Flashcard(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(8.dp),
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
                 text = "${state.numberCurrentWord}/${state.alphabet.size}"
             )
             Column(
@@ -132,20 +143,23 @@ fun Flashcard(
                     Text(
                         text = letter,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
                     )
                 }
                 Text(
                     modifier = Modifier.blurEffect(wordVisible.value),
                     text = state.currentWord.word
                 )
-                StandardButton(text = buttonText) {
-                    if (wordVisible.value) {
-                        wordVisible.value = false
-                        onNextWordClicked()
-                    } else {
-                        wordVisible.value = true
+                PhonButtonFull(
+                    onClick = {
+                        if (wordVisible.value) {
+                            wordVisible.value = false
+                            onNextWordClicked()
+                        } else {
+                            wordVisible.value = true
+                        }
                     }
+                ) {
+                    Text(text = buttonText)
                 }
             }
         }
@@ -162,6 +176,26 @@ fun PreviewFlashcardContent() {
                 numberCurrentWord = 1,
                 currentWord = Word.alphabet[5],
                 wordsCompleted = false,
+                completedFlashCards = 4
+            ),
+            onNextWordClicked = {},
+            onNewRound = {},
+            onViewStats = {},
+            onEndFlashcards = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewFlashcardContentFinished() {
+    MainTheme {
+        Content(
+            state = FlashCardViewState(
+                alphabet = Word.alphabet,
+                numberCurrentWord = 1,
+                currentWord = Word.alphabet[5],
+                wordsCompleted = true,
                 completedFlashCards = 4
             ),
             onNextWordClicked = {},

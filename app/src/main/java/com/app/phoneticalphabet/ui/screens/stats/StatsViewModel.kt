@@ -2,10 +2,13 @@ package com.app.phoneticalphabet.ui.screens.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.phoneticalphabet.firebase.FirebaseEvent
 import com.app.phoneticalphabet.models.averageScore
 import com.app.phoneticalphabet.models.highScore
 import com.app.phoneticalphabet.models.stats
 import com.app.phoneticalphabet.repository.Repository
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.madrapps.plot.line.DataPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +28,8 @@ data class StatsViewState(
 
 @HiltViewModel
 class StatsViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    analytics: FirebaseAnalytics,
 ) : ViewModel() {
     private val _state = MutableStateFlow(StatsViewState())
     val state: StateFlow<StatsViewState> = _state
@@ -45,6 +49,12 @@ class StatsViewModel @Inject constructor(
                     quizStats = quizResults.stats()
                 )
             }
+        }
+
+        // Log firebase-event
+        analytics.logEvent(FirebaseEvent.STATS_VIEWED) {
+            param("completed_flashcards", state.value.totalFlashcards.toString())
+            param("completed_quizzes", state.value.totalQuizzes.toString())
         }
     }
 }
