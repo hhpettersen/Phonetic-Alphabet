@@ -114,7 +114,7 @@ fun Flashcard(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(8.dp),
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
                 text = "${state.numberCurrentWord}/${state.alphabet.size}"
             )
             Column(

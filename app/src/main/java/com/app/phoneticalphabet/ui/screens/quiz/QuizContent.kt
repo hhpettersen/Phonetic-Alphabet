@@ -39,7 +39,6 @@ fun QuizContent(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun Content(
     modifier: Modifier = Modifier,
@@ -93,13 +92,13 @@ fun Questions(
             Text(
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(8.dp),
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
                 text = "Score: $score"
             )
             Text(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(8.dp),
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
                 text = "${numberCurrentQuestion}/${numberOfQuestions}"
             )
             Column(
@@ -116,7 +115,6 @@ fun Questions(
                     Text(
                         text = letter,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
                     )
                 }
                 question.answers.forEach {
