@@ -26,12 +26,13 @@ fun ResultContent(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 104.dp, start = 16.dp, end = 16.dp),
+                .padding(bottom = 104.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (state.newHighScore) {
                 Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     textAlign = TextAlign.Center,
                     text = "New high score, congratulations!",
                     style = MaterialTheme.typography.titleLarge
