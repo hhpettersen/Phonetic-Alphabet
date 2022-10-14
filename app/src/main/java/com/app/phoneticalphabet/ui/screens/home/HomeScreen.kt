@@ -1,13 +1,19 @@
 package com.app.phoneticalphabet.ui.screens.home
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.app.phoneticalphabet.ui.components.StandardButton
+import androidx.compose.ui.unit.sp
+import com.app.phoneticalphabet.ui.components.PhonButton
 import com.app.phoneticalphabet.ui.theme.MainTheme
+import com.app.phoneticalphabet.ui.theme.rubik
 
 @Composable
 fun HomeScreen(
@@ -20,21 +26,81 @@ fun HomeScreen(
         modifier = modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 104.dp),
+            modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.Top,
         ) {
-            StandardButton(text = "Phonetic alphabet") {
-                onAlphabetClicked()
+            Row {
+                Text(
+                    text = "Phon",
+                    fontFamily = rubik,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 48.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    "etic",
+                    fontFamily = rubik,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 48.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
-            StandardButton(text = "Flashcards") {
-                onFlashCardsClicked()
+            Text(
+                "alphabet",
+                fontFamily = rubik,
+                fontWeight = FontWeight.Light,
+                fontSize = 40.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
+        ButtonGroup(
+            modifier = Modifier
+                .align(Alignment.BottomCenter),
+            onAlphabetClicked = onAlphabetClicked,
+            onQuizClicked = onQuizClicked,
+            onFlashCardsClicked = onFlashCardsClicked
+        )
+    }
+}
+
+@Composable
+fun ButtonGroup(
+    modifier: Modifier = Modifier,
+    onAlphabetClicked: () -> Unit,
+    onQuizClicked: () -> Unit,
+    onFlashCardsClicked: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .padding(bottom = 56.dp, start = 16.dp, end = 16.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+
+            PhonButton(
+                modifier = Modifier.weight(1f),
+                onClick = onFlashCardsClicked
+            ) {
+                Text(text = "Flashcards")
             }
-            StandardButton(text = "Quiz") {
-                onQuizClicked()
+            PhonButton(
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                onClick = onAlphabetClicked
+            ) {
+                Text(text = "Alphabet")
             }
+        }
+        PhonButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onQuizClicked
+        ) {
+            Text(text = "Quiz")
         }
     }
 }
