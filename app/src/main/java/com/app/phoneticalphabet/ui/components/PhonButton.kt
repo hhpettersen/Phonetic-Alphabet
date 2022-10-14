@@ -15,24 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
-fun StandardButton(
-    modifier: Modifier = Modifier,
-    text: String,
-    enabled: Boolean = true,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 72.dp),
-        onClick = onClick,
-        enabled = enabled,
-    ) {
-        Text(text = text)
-    }
-}
-
-@Composable
 fun PhonButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -44,6 +26,25 @@ fun PhonButton(
         modifier = modifier,
         enabled = enabled,
         shape = RoundedCornerShape(5.dp),
+        colors = colors,
+        onClick = onClick,
+        content = content
+    )
+}
+
+@Composable
+fun PhonButtonFull(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    content: @Composable RowScope.() -> Unit
+) {
+    PhonButton(
+        modifier = modifier
+            .padding(horizontal = 72.dp)
+            .fillMaxWidth(),
+        enabled = enabled,
         colors = colors,
         onClick = onClick,
         content = content
@@ -62,11 +63,10 @@ fun PreviewPhonButton() {
 
 @Preview
 @Composable
-fun PreviewStandButton() {
+fun PreviewPhonButtonFull() {
     MainTheme {
-        StandardButton(
-            text = "Test",
-            onClick = {}
-        )
+        PhonButtonFull(onClick = { /*TODO*/ }) {
+            Text(text = "Test")
+        }
     }
 }

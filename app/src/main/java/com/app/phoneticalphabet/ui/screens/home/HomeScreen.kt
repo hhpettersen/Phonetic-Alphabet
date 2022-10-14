@@ -82,7 +82,6 @@ fun ButtonGroup(
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-
             PhonButton(
                 modifier = Modifier.weight(1f),
                 onClick = onFlashCardsClicked

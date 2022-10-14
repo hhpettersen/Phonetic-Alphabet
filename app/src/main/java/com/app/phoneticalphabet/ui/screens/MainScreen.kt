@@ -1,7 +1,10 @@
 package com.app.phoneticalphabet.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -71,35 +74,35 @@ fun TopBar(
             .first()
             .lowercase(Locale.ROOT).capitalize(Locale.ROOT)
 
-         CenterAlignedTopAppBar(
-                title = { Text(text = title) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                navigationIcon = {
-                    if (visible) {
-                        IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(
-                                painter = rememberVectorPainter(image = Icons.Default.ArrowBack),
-                                contentDescription = "back"
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    val icon = if (darkTheme) R.drawable.sunny_48px else R.drawable.bedtime_48px
-                    IconButton(
-                        modifier = Modifier
-                            .height(24.dp)
-                            .padding(horizontal = 8.dp),
-                        onClick = { toggleDarkTheme(!darkTheme) }) {
+        CenterAlignedTopAppBar(
+            title = { Text(text = title) },
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            ),
+            navigationIcon = {
+                if (visible) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            painter = painterResource(id = icon),
-                            contentDescription = "toggle dark theme"
+                            painter = rememberVectorPainter(image = Icons.Default.ArrowBack),
+                            contentDescription = "back"
                         )
                     }
-                },
-            )
+                }
+            },
+            actions = {
+                val icon = if (darkTheme) R.drawable.sunny_48px else R.drawable.bedtime_48px
+                IconButton(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .padding(horizontal = 8.dp),
+                    onClick = { toggleDarkTheme(!darkTheme) }) {
+                    Icon(
+                        painter = painterResource(id = icon),
+                        contentDescription = "toggle dark theme"
+                    )
+                }
+            },
+        )
     }
 }
 

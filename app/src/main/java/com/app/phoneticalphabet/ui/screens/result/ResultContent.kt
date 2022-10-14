@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.components.PhonButtonFull
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
@@ -36,14 +36,14 @@ fun ResultContent(
                 )
             }
             Text(text = "Score: ${state.score}")
-            StandardButton(text = "Play again") {
-                onNewGame()
+            PhonButtonFull(onClick = onNewGame) {
+                Text(text = "Play again")
             }
-            StandardButton(text = "View stats") {
-                onViewStats()
+            PhonButtonFull(onClick = onViewStats) {
+                Text(text = "View stats")
             }
-            StandardButton(text = "Back home") {
-                onCloseQuiz()
+            PhonButtonFull(onClick = onCloseQuiz) {
+                Text(text = "Back home")
             }
         }
     }

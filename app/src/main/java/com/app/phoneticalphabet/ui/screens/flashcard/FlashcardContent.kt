@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Word
 import com.app.phoneticalphabet.ui.components.Animations
 import com.app.phoneticalphabet.ui.components.CountDown
-import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.components.PhonButtonFull
 import com.app.phoneticalphabet.ui.extensions.blurEffect
 import com.app.phoneticalphabet.ui.theme.MainTheme
-import kotlinx.coroutines.delay
 
 @Composable
 fun FlashcardContent(
@@ -90,14 +89,14 @@ fun CompletedContent(
     onViewStats: () -> Unit,
     onEndFlashcards: () -> Unit,
 ) {
-    StandardButton(text = "New round") {
-        onNewRound()
+    PhonButtonFull(onClick = onNewRound) {
+        Text(text = "New round")
     }
-    StandardButton(text = "View stats") {
-        onViewStats()
+    PhonButtonFull(onClick = onViewStats) {
+        Text(text = "View stats")
     }
-    StandardButton(text = "Back to dashboard") {
-        onEndFlashcards()
+    PhonButtonFull(onClick = onEndFlashcards) {
+        Text(text = "Back to dashboard")
     }
 }
 
@@ -139,13 +138,17 @@ fun Flashcard(
                     modifier = Modifier.blurEffect(wordVisible.value),
                     text = state.currentWord.word
                 )
-                StandardButton(text = buttonText) {
-                    if (wordVisible.value) {
-                        wordVisible.value = false
-                        onNextWordClicked()
-                    } else {
-                        wordVisible.value = true
+                PhonButtonFull(
+                    onClick = {
+                        if (wordVisible.value) {
+                            wordVisible.value = false
+                            onNextWordClicked()
+                        } else {
+                            wordVisible.value = true
+                        }
                     }
+                ) {
+                    Text(text = buttonText)
                 }
             }
         }
@@ -162,6 +165,26 @@ fun PreviewFlashcardContent() {
                 numberCurrentWord = 1,
                 currentWord = Word.alphabet[5],
                 wordsCompleted = false,
+                completedFlashCards = 4
+            ),
+            onNextWordClicked = {},
+            onNewRound = {},
+            onViewStats = {},
+            onEndFlashcards = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewFlashcardContentFinished() {
+    MainTheme {
+        Content(
+            state = FlashCardViewState(
+                alphabet = Word.alphabet,
+                numberCurrentWord = 1,
+                currentWord = Word.alphabet[5],
+                wordsCompleted = true,
                 completedFlashCards = 4
             ),
             onNextWordClicked = {},

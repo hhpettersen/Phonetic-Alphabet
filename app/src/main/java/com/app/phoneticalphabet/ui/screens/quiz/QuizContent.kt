@@ -15,10 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.phoneticalphabet.models.Answer
 import com.app.phoneticalphabet.models.Question
-import com.app.phoneticalphabet.ui.components.AnimatedExpandAndShrink
-import com.app.phoneticalphabet.ui.components.Animations
-import com.app.phoneticalphabet.ui.components.CountDown
-import com.app.phoneticalphabet.ui.components.StandardButton
+import com.app.phoneticalphabet.ui.components.*
 import com.app.phoneticalphabet.ui.theme.MainTheme
 
 @Composable
@@ -123,11 +120,11 @@ fun Questions(
                     )
                 }
                 question.answers.forEach {
-                    StandardButton(
-                        text = it.word,
-                        enabled = questionsEnabled
+                    PhonButtonFull(
+                        enabled = questionsEnabled,
+                        onClick = { onAnswerSelected(it) }
                     ) {
-                        onAnswerSelected(it)
+                        Text(text = it.word)
                     }
                 }
             }
