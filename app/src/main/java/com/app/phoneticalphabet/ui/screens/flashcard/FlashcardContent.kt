@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -145,10 +145,12 @@ fun Flashcard(
                         style = MaterialTheme.typography.titleLarge,
                     )
                 }
-                Text(
-                    modifier = Modifier.blurEffect(wordVisible.value),
-                    text = state.currentWord.word
-                )
+                Box {
+                    Text(
+                        modifier = Modifier.alpha(if(wordVisible.value) 1f else 0f),
+                        text = state.currentWord.word
+                    )
+                }
                 PhonButtonFull(
                     onClick = {
                         if (wordVisible.value) {
